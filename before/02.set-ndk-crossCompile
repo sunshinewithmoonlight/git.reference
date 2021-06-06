@@ -1,0 +1,17 @@
+I found a cross-compilation chain on the Raspberry Pi and Android. People who want to do it can try it out by cross-compiling.
+
+Android NDK: https://developer.android.com/ndk/downloads/?hl=zh-cn
+
+"Hello World" Quick Start Guide (for Android-27 (8.1)):
+
+$ unzip ./android-ndk-r16b.zip && cd ~/android-ndk-r16b/build/tools && ./make-standalone-toolchain.sh --arch=arm --platform=android-27 --install-dir =./u-toolchain-android_27 && cp -r ./*27 ~/ && cd ~/u-toolchain-android_27/bin && ls
+$ ./arm-linux-androideabi-clang++ "file.cpp" -o ~/file.o -pie -fPIE
+Copy to the phone directory and execute with Termux:
+
+$ cp "/dir/to/file" ./
+$ chmod +x *.o
+$ ./*.o
+Raspberry Pi cross-compilation documentation (I have not tried this):
+
+https://www.raspberrypi.org/documentation/linux/kernel/building.mdi
+

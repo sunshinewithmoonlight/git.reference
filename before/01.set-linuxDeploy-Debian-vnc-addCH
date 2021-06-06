@@ -1,0 +1,9 @@
+user-refer:
+	https://www.jianshu.com/p/961957ee53d0
+
+mirror:
+	http://mirrors.ustc.edu.cn/debian/
+
+ssh::
+	sudo apt-get install ttf-wqy-zenhei
+

@@ -1,0 +1,5 @@
+
+dd if=/dev/zero of=~/.swap bs=10M count=100
+chmod 600 ~/.swap
+mkswap ~/.swap
+echo '/home/u/.swap	none	swap' >> /etc/fstab 
