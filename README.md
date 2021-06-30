@@ -1,15 +1,15 @@
-## ADB：uiautomator2
+## ADB: uiautomator2
 
 	pip3 install --pre --upgrade uiautomator2 weditor
 	python -m uiautomator2 init
 	python -m weditor
 
 
-## ADB：截屏
+## ADB: 截屏
 
-参考：<https://www.jianshu.com/p/9a6d77ff50a8?tdsourcetag=s_pctim_aiomsg>
+参考: <https://www.jianshu.com/p/9a6d77ff50a8?tdsourcetag=s_pctim_aiomsg>
 
-高版本安卓支持直接保存：
+高版本安卓支持直接保存: 
 ```
 adb exec-out screencap -p > 1.png
 ```
@@ -23,12 +23,12 @@ def convert_img():
  f.write(bys_)
  f.close()
 ```
-简明：
+简明: 
 ```
 os.system("adb exec-out screencap -p > 1.read.png")
 open('2.write.png', 'wb').write(open('1.read.png', 'rb').read().replace(b'\r\n',b'\n'))
 ```
-低版本安卓：
+低版本安卓: 
 ```
 adb devices
 adb shell screencap -p /sdcard/screenshot.png
@@ -37,26 +37,26 @@ rem adb shell rm /sdcard/screenshot.png
 ```
 
 
-## ADB：网络调试
+## ADB: 网络调试
 
-方法1：数据线连接后电脑端：
+方法1: 数据线连接后电脑端: 
 ```
 adb devices
 adb tcpip 5555
 ```
-方法2：安卓端：
+方法2: 安卓端: 
 ```
 su
 setprop service.adb.tcp.port 5555 && stop adbd && start adbd
 ```
-连接：
+连接: 
 ```
 adb connect ...:5555
 ```
 
 
-## ADB：触屏
-参考：<https://blog.bihe0832.com/adb-shell-input.html>
+## ADB: 触屏
+参考: <https://blog.bihe0832.com/adb-shell-input.html>
 ```
 adb shell input tap <x> <y> (Default: touchscreen)
 adb shell input swipe <x1> <y1> <x2> <y2> [duration(ms)] (Default: touchscreen)
@@ -66,30 +66,30 @@ adb shell input roll <dx> <dy> (Default: trackball)
 ```
 
 
-## Adb-Server：Setup：in-Termux
+## Adb-Server: Setup: in-Termux
 
-参考：https://github.com/Nethesh/Termux-ADB/blob/master/README.md
+参考: https://github.com/Nethesh/Termux-ADB/blob/master/README.md
 
 连接vpn后继续
-安装：
+安装: 
 
     apt update && apt install wget && wget https://github.com/MasterDevX/Termux-ADB/raw/master/InstallTools.sh && bash InstallTools.sh
 
-卸载：
+卸载: 
 
     apt update && apt install wget && wget https://github.com/MasterDevX/Termux-ADB/raw/master/RemoveTools.sh && bash RemoveTools.sh
 
 
-## Airplay Receiver For Android and Windows：下载
+## Airplay Receiver For Android and Windows: 下载
 
-参考：<https://gitee.com/halo-x/Airplay-SDK>
+参考: <https://gitee.com/halo-x/Airplay-SDK>
 
 
-## Android Studio："Plugin with id 'kotlin-android' not found" 解决方法
+## Android Studio: "Plugin with id 'kotlin-android' not found" 解决方法
 
 当你的使用Kotlin编写的android项目中出现Plugin with id 'kotlin-android' not found.
 
-你可以查看下你的项目Gradle文件，加上如图两行代码：
+你可以查看下你的项目Gradle文件，加上如图两行代码: 
 
 ```
 ext.kotlin_version="1.3.30"
@@ -98,16 +98,16 @@ classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 ```
 
 
-## Android Studio：使用 ConstraintLayout 构建布局
+## Android Studio: 使用 ConstraintLayout 构建布局
 
-参考：
+参考: 
 <https://developer.android.com/training/constraint-layout/index.html>
 <https://developer.android.com/studio/write/layout-editor>
 ```
 repositories {
  google()
  }
-将该库作为依赖项添加到同一个 build.gradle 文件中，如以下示例所示。请注意，最新版本可能与示例中显示的不同：
+将该库作为依赖项添加到同一个 build.gradle 文件中，如以下示例所示。请注意，最新版本可能与示例中显示的不同: 
  dependencies {
  implementation 'com.android.support.constraint:constraint-layout:1.1.2'
  } 
@@ -116,9 +116,9 @@ repositories {
 ```
 
 
-## Android Stuido：jcenter\(\) 下载慢,超时问题解决方法
+## Android Stuido: jcenter\(\) 下载慢,超时问题解决方法
 
-参考：<https://maven.aliyun.com/mvn/view>
+参考: <https://maven.aliyun.com/mvn/view>
 
 	repositories {
 		maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
@@ -129,7 +129,7 @@ repositories {
 	}
 
 
-## ArchLinux：GPG key导入慢
+## ArchLinux: GPG key导入慢
 
 	vim /etc/pacman.conf
 	// SigLevel=Never
@@ -137,7 +137,7 @@ repositories {
 	rm -rf /etc/pacman.d/gunpg
 
 
-## ArchLinux：Grub：引导时间配置
+## ArchLinux: Grub: 引导时间配置
 
 	sudo vim /etc/default/grub
 
@@ -146,7 +146,7 @@ repositories {
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 
-## ArchLinux：Setup：源
+## ArchLinux: Setup: 源
 
 	sudo vim /etc/pacman.conf
 
@@ -162,16 +162,16 @@ repositories {
 	Server = http://mirrors.163.com/archlinux-cn/$arch
 	# Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
 
-添加AUR源：yay 用户：
+添加AUR源: yay 用户: 
 
 	yay --aururl “https://aur.tuna.tsinghua.edu.cn” --save
 
-手动更改源排名：
+手动更改源排名: 
 
 	sudo pacman-mirrors -i -c China -m rank
 
 
-## ArchLinux：armv7：配置
+## ArchLinux: armv7: 配置
 
 Arch-linux-v7h-200208来自百度网盘139...的账号
 linux-deploy来自TIM
@@ -180,20 +180,20 @@ termux来自酷安
  
 
 
-## ArchLinux：pacman 提示 "error: failed to update core (unable to lock database)"
+## ArchLinux: pacman 提示 "error: failed to update core (unable to lock database)"
 
 	rm -f /var/lib/pacman/db.lck
 
 
-## ArchLinux：swap
+## ArchLinux: swap
 
-参考：
+参考: 
 <https://wiki.archlinux.org/index.php/Swap>
 
 
-## ArchLinux：tty：字体大小
+## ArchLinux: tty: 字体大小
 
-参考：
+参考: 
 <https://wiki.ArchLinux.org/index.php/Linux_console#Fonts>
 
 	su
@@ -202,16 +202,16 @@ termux来自酷安
 	echo "setfont ter-c22b.psf"> ~/.bash_profile
 
 
-## ArchLinux：tty：自动登录 root
+## ArchLinux: tty: 自动登录 root
 
 	sudo vim /usr/lib/systemd/system/getty@.service
 
 	// ExecStart=-/sbin/agetty --noclear %I 38400 linux 
-	// 修改为：
+	// 修改为: 
 	// ExecStart=-/sbin/agetty --noclear -a root %I 38400 linux 
 
 
-## ArchLinux：tty：鼠标
+## ArchLinux: tty: 鼠标
 
 gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 
@@ -220,25 +220,25 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	mkdir /etc/conf.d
 	vim /etc/conf.d/gpm
 
-	// 对于 USB 鼠标应该使用：
+	// 对于 USB 鼠标应该使用: 
 	// GPM_ARGS="-m /dev/input/mice -t imps2"
-	// 对于 PS/2 鼠标，用下面这行替代已有的一行：
+	// 对于 PS/2 鼠标，用下面这行替代已有的一行: 
 	// GPM_ARGS="-m /dev/psaux -t ps2"
-	// 对于 IBM Trackpoints 使用：
+	// 对于 IBM Trackpoints 使用: 
 	// GPM_ARGS="-m /dev/input/mice -t ps2"
 
 	systemctl enable gpm
 	systemctl restart gpm
 
 
-## ArchLinux：中文
+## ArchLinux: 中文
 
 	sudo pacman -Ss font chinese
 
 
-## ArchLinux：安装
+## ArchLinux: 安装
 
-下载位置：<https://mirrors.tuna.tsinghua.edu.cn/ArchLinux/iso/latest/>
+下载位置: <https://mirrors.tuna.tsinghua.edu.cn/ArchLinux/iso/latest/>
 
 	// # ls /sys/firmware/efi/efivars
 
@@ -302,33 +302,33 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	# pacman -S xorg xorg-server gnome gnome-extra && systemctl enable gdm.service && reboot
 
 
-## ArchLinux：查看软件包安装历史
+## ArchLinux: 查看软件包安装历史
  
 	vim /var/log/pacman.log
 
- 或者：
+ 或者: 
 
 	pacman -Qe
 
 
-## ArchLinux：添加用户
+## ArchLinux: 添加用户
 
 	su
 	useradd -m -g users -s /bin/bash USERNAME
 	passwd USERNAME
 
 
-## ArchLinux：清理软件包缓存
+## ArchLinux: 清理软件包缓存
 
 	sudo rm /var/cache/pacman/pkg/*
 
 
-## Archlinux：bash\_logout
+## Archlinux: bash\_logout
 
 	rm .bash_history
 
 
-## Archlinux：proxy
+## Archlinux: proxy
 
 	export http_proxy=http://10.203.0.1:5187/
 	export https_proxy=$http_proxy
@@ -337,7 +337,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	export no_proxy=\"localhost,127.0.0.1,localaddress,.localdomain.com\"
 
 
-## Archlinux：自动启动项：手动设置
+## Archlinux: 自动启动项: 手动设置
 
 	su
 	cd /etc/systemd/system
@@ -354,7 +354,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	systemctl enable mongod.service
 
 
-## Archlinx：中文输入法
+## Archlinx: 中文输入法
 
 	sudo pacman -Sy fcitx-configtool fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-sogoupinyin
 	sudo vim /etc/environment
@@ -367,46 +367,34 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	... // 同上
 
 
-## Bandicam：破解
+## Bandicam: 破解
 
-参考：
+参考: 
 <https://www.52pojie.cn/thread-865343-1-1.html>
 
-主程序下载：
+主程序下载: 
 <https://dl.bandicam.cn/bdcamsetup.exe>
 
 
-## Clang：Setup：in-Windows
+## Clang: Setup: in-Windows
 
-参考：
+参考: 
 <https://www.cnblogs.com/meteoric_cry/p/5063288.html> 
 <http://www.llvm.org/releases/download.html#3.7.0> 
 <http://mingw-w64.org/doku.php/download> 
 
 
-## Dns：查询
+## Dns: 查询
 
 <http://tool.chinaz.com/dns?type=1&host=&ip=>
 
 
-## Export：Path
+## Export: Path
 
 	export PATH="$PATH:/...
 
 
-## GitHub：代下载
-
-参考：<https://g.widora.cn/>
-
-
-## GitHub：访问慢下载慢
-
-	192.30.253.112 github.com
-	151.101.185.194 github.global.ssl.fastly.net
-	192.30.253.120 codeload.github.com
-
-
-## Git：
+## Git: 
 
 	git clone ...
 	
@@ -425,7 +413,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	git push origin master --force
 
 
-## Git：仓库中指定子目录和指定文件
+## Git: 仓库中指定子目录和指定文件
 
 ```
 // 初始化空库
@@ -448,7 +436,7 @@ $ git pull origin master
 ```
 
 
-## Git：删除全部提交
+## Git: 删除全部提交
 
 	git checkout --orphan latest_branch
 	git add -A
@@ -459,13 +447,13 @@ $ git pull origin master
 	git push --set-upstream origin master
 
 
-## Git：回滚
+## Git: 回滚
 
-	// 回到上个版本：
+	// 回到上个版本: 
 
 	git reset --hard HEAD^
 
-	// 回到前几个版本：
+	// 回到前几个版本: 
 
 	git reset --hard HEAD~3
 	git reset --hard commit_id
@@ -473,7 +461,19 @@ $ git pull origin master
 	git push origin HEAD --force
 
 
-## Golang：Setup：源
+## GitHub: 代下载
+
+参考: <https://g.widora.cn/>
+
+
+## GitHub: 访问慢下载慢
+
+	192.30.253.112 github.com
+	151.101.185.194 github.global.ssl.fastly.net
+	192.30.253.120 codeload.github.com
+
+
+## Golang: Setup: 源
 
 ```
 export GO111MODULE=on
@@ -482,7 +482,7 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 ```
 
 
-## IOS：PUBG
+## IOS: PUBG
 
 关闭查找iPhone
 
@@ -518,7 +518,7 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 之后游戏不能选择其他画质了，不然又自动还原
 
 
-## Jupyter-Lab：Setup
+## Jupyter-Lab: Setup
 
     pip install jupyterlab
     echo > /data/data/com.termux/files/home/.jupyter/jupyter_notebook_config.py
@@ -535,12 +535,12 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
     pip install https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/jupyterhub/jupyterlab_language_pack_zh_CN-0.0.1.dev0-py2.py3-none-any.whl
 
 
-## Luckypatchers：下载
+## Luckypatchers: 下载
 
-参考：<https://www.luckypatchers.com>
+参考: <https://www.luckypatchers.com>
 
 
-## MacOS：关闭睡眠模式
+## MacOS: 关闭睡眠模式
 
 	su
 
@@ -549,12 +549,12 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	pmset -g
 
 
-## Magisk：
+## Magisk: 
 
 <https://topjohnwu.github.io/Magisk/guides.html>
 
 
-## Magisk：build.prop
+## Magisk: build.prop
 
 	sudo vim /data/adb/modules/hosts/system/build.prop
 
@@ -576,9 +576,9 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	ro.media.enc.jpeg.quality=100
 
 
-## Markdown：pandoc 生成目录
+## Markdown: pandoc 生成目录
 
-下载地址：<https://github.com/jgm/pandoc/releases>
+下载地址: <https://github.com/jgm/pandoc/releases>
 arm可在Arch仓库找到。
 
 pandoc 默认生成三级目录。
@@ -588,7 +588,7 @@ pandoc 默认生成三级目录。
 	// pandoc -s --toc --toc-depth=4 FAQ.md -o FAQ.md
 
 
-## Mongodb：Python
+## Mongodb: Python
  
 	from pymongo import MongoClient
 	MongoClient()[...][...].insert_one({"...":"...", ...})
@@ -596,9 +596,9 @@ pandoc 默认生成三级目录。
 	MongoClient()[...][...].find_one({'...':{'$regex': '^%s' %context }})['...']
 
 
-## NAS：配置
+## NAS: 配置
 
- 参考：
+ 参考: 
  <https://cloud.tencent.com/developer/article/1563182>
 
 	pacman -S samba
@@ -641,9 +641,9 @@ pandoc 默认生成三级目录。
 <https://github.com/lutzroeder/netron/blob/master/README.md>
 
 
-## OS：内核
+## OS: 内核
 
-参考：
+参考: 
 <http://hurlex.0xffffff.org/> 
 <http://wiki.0xffffff.org/> 
 <http://www.osdever.net/bkerndev/Docs/gettingstarted.htm> 
@@ -651,12 +651,12 @@ pandoc 默认生成三级目录。
 <https://wiki.osdev.org/Main_Page> 
 
 
-## Pacman：overwrite
+## Pacman: overwrite
 
 	sudo pacman -S --overwrite '*' ...
 
 
-## Pacman：手动安装
+## Pacman: 手动安装
 
 	su
 	cd /var/ca*/pac*/*/
@@ -666,42 +666,42 @@ pandoc 默认生成三级目录。
 	cp ... / -r
 
 
-## Python：PIL
+## Python: PIL
 
 ```
 pip install Pillow
 ```
 
 
-## Python：PIL
+## Python: PIL
 
-参考：<https://www.jb51.net/article/159654.htm>
+参考: <https://www.jb51.net/article/159654.htm>
 ```
 from PIL import Image
 
-# 读取一张图片：
+# 读取一张图片: 
 im=Image.open('/home/Picture/test.jpg')	
-# 显示一张图片：
+# 显示一张图片: 
 im.show()
-# 保存图片：
+# 保存图片: 
 im.save("save.gif","GIF") 
-# 创建新图片：
+# 创建新图片: 
 Image.new(mode,size)
 Image.new(mode,size,color)
 newImg = Image.new("RGBA",(640,480),(0,255,0))
 newImg.save("newImg.png","PNG")
-# 查看图像信息：
+# 查看图像信息: 
 im.format, im.size, im.mode
-# 图片裁剪：
+# 图片裁剪: 
 box=(100,100,500,500)
 # 设置要裁剪的区域
 region=im.crop(box) #此时，region是一个新的图像对象。
-# 改变图像的大小：
+# 改变图像的大小: 
 out=img.resize((128,128))#resize成128*128像素大小
 ```
 
 
-## Python：PIP：Setup：源
+## Python: PIP: Setup: 源
 
 ```
 pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/web/simple
@@ -711,7 +711,7 @@ python -m pip install --upgrade pip
 ```
 
 
-## Python：Proxy
+## Python: Proxy
 
 	import os
 
@@ -725,20 +725,20 @@ python -m pip install --upgrade pip
 	#your code goes here
 
 
-## Python：Pysqlcipher3
+## Python: Pysqlcipher3
 
 pacman -S sqlcipher
 pip3 install pysqlcipher3
 
 
-## Python：VSCode：cv2
+## Python: VSCode: cv2
 
 	ctrl+shift+p
 
     "python.linting.pylintArgs": ["--generate-members"]
 
 
-## RPI：Manjaro_arm：RPi.GPIO
+## RPI: Manjaro_arm: RPi.GPIO
 
 	(sudo pacman -S python-pip)
 	(pacman -S python python-pip base-devel)
@@ -746,7 +746,7 @@ pip3 install pysqlcipher3
 	yay --aur python-raspberry-gpio
 
 
-## RPI：Manjaro_arm：vnc
+## RPI: Manjaro_arm: vnc
 	
 	sudo pacman -S tigervnc
 	vncpasswd
@@ -816,14 +816,14 @@ pip3 install pysqlcipher3
 	. 	匹配除换行符 \n 之外的任何单字符。
 	? 	匹配前面的子表达式零次或一次
 	^ 	匹配输入字符串的开始位置
-	： 	指明两项之间的一个选择。
+	:  	指明两项之间的一个选择。
 	\b 	匹配一个单词边界，即字与空格间的位置。
 	\B 	非单词边界匹配。
 
 	eg: \b\S+
 
 
-## Rust.Cargo：源
+## Rust.Cargo: 源
 
 ```
 vim ~/.cargo/config
@@ -835,7 +835,7 @@ registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 ```
 
 
-## Rust.Rustup：源
+## Rust.Rustup: 源
 
 ```
 // Windows
@@ -845,7 +845,7 @@ export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
 ```
 
 
-## Rust：Cargo：Error
+## Rust: Cargo: Error
 
 ```
 [35] SSL connect error (schannel: next InitializeSecurityContext failed: Unknown error (0x80092013) - The revocation function was unable to check revocation because the revocation server was offline.)
@@ -856,7 +856,7 @@ set CARGO_HTTP_CHECK_REVOKE=false
 ```
 
 
-## Rust：Cargo：cargo-edit
+## Rust: Cargo: cargo-edit
 
 ```
 cargo install cargo-edit
@@ -867,9 +867,9 @@ cargo upgrade
 ```
 
 
-## TensorFlow：Could not find a version that satisfies the requirement tensorflow
+## TensorFlow: Could not find a version that satisfies the requirement tensorflow
 
-参考：<https://pypi.org/project/tensorflow/#files>
+参考: <https://pypi.org/project/tensorflow/#files>
 
 TensorFlow版本目前还不支持Python新版本。
 
@@ -879,7 +879,7 @@ pip install tensorflow-cpu
 ```
 
 
-## Termux：1
+## Termux: 1
 
 	sed -i 's@^\(deb.*stable main\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/termux-packages-24 stable main@' $PREFIX/etc/apt/sources.list
 	sed -i 's@^\(deb.*games stable\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/game-packages-24 games stable@' $PREFIX/etc/apt/sources.list.d/game.list
@@ -888,7 +888,7 @@ pip install tensorflow-cpu
 	pkg install vim python git
 
 
-## Termux：2.界面按键
+## Termux: 2.界面按键
 	
 	mkdir .termux
 	vim .termux/termux.properties
@@ -899,7 +899,7 @@ pip install tensorflow-cpu
 	]
 
 
-## Termux：3.bashrc
+## Termux: 3.bashrc
 
 	vim .bashrc
 
@@ -942,13 +942,13 @@ pip install tensorflow-cpu
 	export SECRET_KEY_3gy6=
 
 
-## Termux：4.Numpy
+## Termux: 4.Numpy
 
 	curl -l https://its-pointless.github.io/setup-pointless-repo.sh|sh
 	pkg install numpy
 
 
-## Termux：5.Minio
+## Termux: 5.Minio
 
 	pkg install wget && wget https://dl.minio.io/server/minio/release/linux-arm/minio -c && chmod +x minio && su -c 'iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to- port 8080' && (MINIO_ACCESS_KEY=shine MINIO_SECRET_KEY=sunshine /data/data/com.termux/files/home/minio server /sdcard --address ":1080"&)
 	
@@ -964,20 +964,44 @@ tesseract 01.png 02 -l chi_sim
 ```
 
 
-## VMware：MacOS
+## VMware: MacOS
 
-Unlocker：
+Unlocker: 
 
 <https://github.com/paolo-projects/unlocker/releases>
 
-VMware Workstation Pro 16 许可证密钥，批量永久激活：
+VMware Workstation Pro 16 许可证密钥，批量永久激活: 
 
 	ZF3R0-FHED2-M80TY-8QYGC-NPKYF
 	YF390-0HF8P-M81RQ-2DXQE-M2UT6
 	ZF71R-DMX85-08DQY-8YMNC-PPHV8
 
 
-## VSCode：关闭侧边栏
+## VSCode (Termux)
+
+	pkg uninstall -y git
+	pkg install -y python nodejs yarn git vim
+	yarn global add code-server
+	cd ~/.config/yarn/global/node_modules/code-server/lib/vscode/node_modules/spdlog/
+	vim binding.gyp
+
+	"targets": [{
+			"target_name": "spdlog",
+	+       "libraries": [ "-latomic" ],
+			"sources": [
+					"src/main.cc",
+					"src/logger.cc"
+			],
+
+	npm install
+	pkg install ripgrep -y
+	cd ~/.config/yarn/global/node_modules/code-server/lib/vscode/node_modules/vscode-ripgrep/bin
+	ln -s $(which rg) .
+	pkg install openssl-tool
+	code-server --bind-addr 0.0.0.0:8080 --disable-telemetry --auth none
+
+
+## VSCode: 关闭侧边栏
 
 	"editor.folding":false,
 	"editor.glyphMargin": false,
@@ -985,11 +1009,11 @@ VMware Workstation Pro 16 许可证密钥，批量永久激活：
 
 ## Visual CPP
 
-在bing上搜索visual c++可得：
+在bing上搜索visual c++可得: 
 <https://support.microsoft.com/zh-cn/help/2977003/the-latest-supported-visual-c-downloads>
 
 
-## Waifu2x：图像放大
+## Waifu2x: 图像放大
 
 <https://github.com/AaronFeng753/Waifu2x-Extension-GUI>
 
@@ -999,39 +1023,39 @@ VMware Workstation Pro 16 许可证密钥，批量永久激活：
 	screen wget -r https://mirrors.sirung.com/source/fuchsia/ -c -np -T 5 -t 0
 
 
-## Windows：Microsoft Edge：扩展
+## Windows: Microsoft Edge: 扩展
 
-扩展的下载：<https://crxdl.com/>
+扩展的下载: <https://crxdl.com/>
 
 将下载来的文件后缀名 *.crx 改成 *.rar，解压这个压缩文件得到一个文件夹。
 如果解压出的文件夹中有"\_metadata"，将前面的"\_"去掉，否则无法加载。
 打开扩展程序页面，选中右上方开发人员模式复选框，点击载入正在开发的扩展程序，选中刚刚解压出来的文件夹。
 
 
-## Windows：Microsoft Visual C++ Build Tools下载
+## Windows: Microsoft Visual C++ Build Tools下载
 
 解决Visual C++ 14.0 is required问题  
-下载：  
+下载:   
 <http://go.microsoft.com/fwlink/?LinkId=691126>
-参考：  
+参考:   
 <https://blog.csdn.net/bbhdeal/article/details/81144783>
 <https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/>
 
 
-## Windows：自动同步时间
+## Windows: 自动同步时间
 
-管理员状态在CMD：
+管理员状态在CMD: 
 
 	w32tm /register
 
 在“服务”中找到“Windows Time”项，设置为自动启动，并启动服务。
 
-在“计划任务”中新建计划任务，以最高权限运行：
+在“计划任务”中新建计划任务，以最高权限运行: 
 
 	w32tm /resync
 
 
-## Xiaomi：线刷
+## Xiaomi: 线刷
 
 <http://www.miui.com/shuaji-393.html>  
 <https://xiaomirom.com/rom/redmi-note-9-4g-9t-lime-china-fastboot-recovery-rom/>  
@@ -1040,6 +1064,6 @@ VMware Workstation Pro 16 许可证密钥，批量永久激活：
 	fastboot.exe boot twrp.img
 
 
-##  论文：下载
+##  论文: 下载
 
 <https://ifish.fun/paper/search>
