@@ -378,11 +378,15 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	importJs.setAttribute("type","text/javascript")
 	importJs.setAttribute("src", 'http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js')
 	document.getElementsByTagName("head")[0].appendChild(importJs)
-
-	try{$(".soil").text("");} catch (e) {console.log("jQuery尚未加载完成，在此之前请在检查元素中点击一下歌曲名"); throw 1;}
+	console.log("如果遇到错误，可能是jQuery尚未加载完成；如果复制的结果为空，请先在检查元素中点击一下歌曲名（刷新页面后点击一次即可）。请重新执行该脚本");
 	var v=[];
-	$("b").each(function(i, i2){ v.push($(this).attr("title"));});
-	if (v.length==0) {console.log("请在检查元素中点击一下歌曲名"); throw 1;}
+	var name="";
+	var author="";
+	$("b").each(function(i, i2){
+		name= $(this).attr("title")
+		author= $(this).parents("td").next().next().children("div").attr("title")
+		v.push(name+" "+author);
+		});
 	var v2 = v.join("\n");
 	console.log(v2)
 	console.log("以上内容将被复制到剪贴板")
