@@ -1,11 +1,33 @@
-## ADB: uiautomator2
+## ADB: input
+参考: <https://blog.bihe0832.com/adb-shell-input.html>
+```
+adb shell input tap <x> <y> (Default: touchscreen)
+adb shell input swipe <x1> <y1> <x2> <y2> [duration(ms)] (Default: touchscreen)
+adb shell input press (Default: trackball)
+adb shell input roll <dx> <dy> (Default: trackball)
 
-	pip3 install --pre --upgrade uiautomator2 weditor
-	python -m uiautomator2 init
-	python -m weditor
+```
 
 
-## ADB: 截屏
+## ADB: net
+
+方法1: 数据线连接后电脑端: 
+```
+adb devices
+adb tcpip 5555
+```
+方法2: 安卓端: 
+```
+su
+setprop service.adb.tcp.port 5555 && stop adbd && start adbd
+```
+连接: 
+```
+adb connect ...:5555
+```
+
+
+## ADB: screencap
 
 参考: <https://www.jianshu.com/p/9a6d77ff50a8?tdsourcetag=s_pctim_aiomsg>
 
@@ -37,55 +59,14 @@ rem adb shell rm /sdcard/screenshot.png
 ```
 
 
-## ADB: 网络调试
+## ADB: uiautomator2: initialze
 
-方法1: 数据线连接后电脑端: 
-```
-adb devices
-adb tcpip 5555
-```
-方法2: 安卓端: 
-```
-su
-setprop service.adb.tcp.port 5555 && stop adbd && start adbd
-```
-连接: 
-```
-adb connect ...:5555
-```
+	pip3 install --pre --upgrade uiautomator2 weditor
+	python -m uiautomator2 init
+	python -m weditor
 
 
-## ADB: 触屏
-参考: <https://blog.bihe0832.com/adb-shell-input.html>
-```
-adb shell input tap <x> <y> (Default: touchscreen)
-adb shell input swipe <x1> <y1> <x2> <y2> [duration(ms)] (Default: touchscreen)
-adb shell input press (Default: trackball)
-adb shell input roll <dx> <dy> (Default: trackball)
-
-```
-
-
-## Adb-Server: Setup: in-Termux
-
-参考: https://github.com/Nethesh/Termux-ADB/blob/master/README.md
-
-连接vpn后继续
-安装: 
-
-    apt update && apt install wget && wget https://github.com/MasterDevX/Termux-ADB/raw/master/InstallTools.sh && bash InstallTools.sh
-
-卸载: 
-
-    apt update && apt install wget && wget https://github.com/MasterDevX/Termux-ADB/raw/master/RemoveTools.sh && bash RemoveTools.sh
-
-
-## Airplay Receiver For Android and Windows: 下载
-
-参考: <https://gitee.com/halo-x/Airplay-SDK>
-
-
-## Android Studio: "Plugin with id 'kotlin-android' not found" 解决方法
+## Android Studio: "Plugin with id 'kotlin-android' not found"
 
 当你的使用Kotlin编写的android项目中出现Plugin with id 'kotlin-android' not found.
 
@@ -98,7 +79,7 @@ classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 ```
 
 
-## Android Studio: 使用 ConstraintLayout 构建布局
+## Android Studio: ConstraintLayout: initialze
 
 参考: 
 <https://developer.android.com/training/constraint-layout/index.html>
@@ -116,7 +97,7 @@ repositories {
 ```
 
 
-## Android Stuido: jcenter\(\) 下载慢,超时问题解决方法
+## Android Studio: jcenter: faster
 
 参考: <https://maven.aliyun.com/mvn/view>
 
@@ -129,15 +110,351 @@ repositories {
 	}
 
 
-## ArchLinux: GPG key导入慢
+## Android: Adb server: initialze
 
-	vim /etc/pacman.conf
-	// SigLevel=Never
+参考: https://github.com/Nethesh/Termux-ADB/blob/master/README.md
 
-	rm -rf /etc/pacman.d/gunpg
+连接vpn后继续
+安装: 
+
+    apt update && apt install wget && wget https://github.com/MasterDevX/Termux-ADB/raw/master/InstallTools.sh && bash InstallTools.sh
+
+卸载: 
+
+    apt update && apt install wget && wget https://github.com/MasterDevX/Termux-ADB/raw/master/RemoveTools.sh && bash RemoveTools.sh
 
 
-## ArchLinux: Grub: 引导时间配置
+## Android: Google Play: Certificated
+
+termux::
+
+	pkg install tsu sqlite
+	sudo sqlite3 /data/data/com.google.android.gsf/databases/gservices.db "select * from main where name = \"android_id\";"
+
+<https://www.google.com/android/uncertified/>
+
+注册之后，谷歌同步数据需要一点时间，稍等5分钟
+清除谷歌play应用市场的数据和缓存
+谷歌账户给注销退出，等待5分钟，重新登录
+继续重新打开谷歌Play
+
+
+## Android: Termux: CodeServer: initialize
+
+	pkg install -y python nodejs yarn vim
+	exit
+
+	pkg uninstall -y git
+	pkg install -y git
+	yarn global add code-server
+	
+	cd ~/.config/yarn/global/node_modules/code-server/lib/vscode/node_modules/spdlog/
+	vim binding.gyp
+
+	"targets": [{
+			"target_name": "spdlog",
+	+       "libraries": [ "-latomic" ], 
+			"sources": [
+					"src/main.cc",
+					"src/logger.cc"
+			],
+
+	npm install
+	pkg install ripgrep -y
+	cd ~/.config/yarn/global/node_modules/code-server/lib/vscode/node_modules/vscode-ripgrep/bin
+	ln -s $(which rg) .
+	pkg install openssl-tool
+	code-server --bind-addr 0.0.0.0:8080 --disable-telemetry --auth none
+
+
+## Android: Termux: Minio
+
+	pkg install wget && wget https://dl.minio.io/server/minio/release/linux-arm/minio -c && chmod +x minio && su -c 'iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to- port 8080' && (MINIO_ACCESS_KEY=shine MINIO_SECRET_KEY=sunshine /data/data/com.termux/files/home/minio server /sdcard --address ":1080"&)
+	
+
+
+## Android: Termux: Numpy
+
+	curl -LO https://its-pointless.github.io/setup-pointless-repo.sh
+	bash setup-pointless-repo.sh
+	pkg install numpy
+
+
+## Android: Termux: bashrc
+
+	vim .bashrc
+
+	alias p='python'
+	alias v='vim'
+	alias l='ls'
+	alias i='pkg install'
+	alias ii='pkg uninstall'
+	alias pi='pip install'
+	alias pii='pip uninstall'
+	alias r='rm -rf'
+	alias rm='rm -rf'
+	alias rmm='rm .bash_history > /dev/null 2>&1 && rm -rf /data/data/com.termux/cache/apt/*'
+	alias pmd='sudo pm disable'
+	alias pme='sudo pm enable'
+
+	alias c='python /data/data/com.termux/files/home/git.py/1.tools/8.cast-clipboard.py'
+	alias g='python /data/data/com.termux/files/home/git.py/1.tools/8.get-clipboard.py'
+	alias ft='python /data/data/com.termux/files/home/git.py/1.tools/5.file-transmission.py'
+	alias ftt='cd /storage/emulated/0/Download && python /data/data/com.termux/files/home/git.py/1.tools/5.file-transmission.py'
+	alias co='code-server --bind-addr 0.0.0.0:8080 --disable-telemetry --auth none'
+	alias cc='python ~/git.h5/3/1.py'
+	alias h='htop'
+	alias gp='git pull'
+	alias gpp="git add . && git commit -m 'AutoCommit' && git push"
+	alias gc='git clone'
+	alias n='su -c "iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080"'
+	alias ww='su -c "cmd wifi force-low-latency-mode enabled"'
+	alias www='su -c "cmd wifi force-low-latency-mode disabled"'
+	alias vv='vim ~/.bashrc'
+
+	# alias aa="su -c 'setprop service.adb.tcp.port 55051' &&su -c 'stop adbd' &&su -c 'start adbd'"
+	# alias aaa='adb connect 127.0.0.1:55051 && adb devices'
+	# alias hh='sudo swapoff /dev/block/zram0'
+	# alias mm='MINIO_ACCESS_KEY=shine MINIO_SECRET_KEY=sunshine /data/data/com.termux/files/home/minio server /storage/emulated/0 --address ":8080"'
+
+	export API_KEY_3gy6=
+	export SECRET_KEY_3gy6=
+
+
+## Android: Termux: button: initialize
+	
+	mkdir .termux
+	vim .termux/termux.properties
+
+	extra-keys = [ \
+	['ESC','HOME','UP','END','ENTER'], \
+	['CTRL','LEFT','DOWN','RIGHT','TAB'] \
+	]
+
+
+## Android: Termux: pkg: initialze
+
+	sed -i 's@^\(deb.*stable main\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/termux-packages-24 stable main@' $PREFIX/etc/apt/sources.list
+	sed -i 's@^\(deb.*games stable\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/game-packages-24 games stable@' $PREFIX/etc/apt/sources.list.d/game.list
+	sed -i 's@^\(deb.*science stable\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/science-packages-24 science stable@' $PREFIX/etc/apt/sources.list.d/science.list
+	apt update && apt upgrade
+	pkg install vim python git
+
+
+## Android: Wifi: low latency
+
+	sudo cmd wifi force-low-latency-mode enabled
+
+
+## Android: Xiaomi: update
+
+<http://www.miui.com/shuaji-393.html>  
+<https://xiaomirom.com/rom/redmi-note-9-4g-9t-lime-china-fastboot-recovery-rom/>  
+
+	fastboot.exe flash recovery twrp.img
+	fastboot.exe boot twrp.img
+
+
+## Archlinx: Chinese input method
+
+	sudo pacman -Sy fcitx-configtool fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-sogoupinyin
+	sudo vim /etc/environment
+
+	export XMODIFIERS="@im=fcitx"
+	export GTK_IM_MODULE=fcitx
+	export QT_IM_MODULE=fcitx
+
+	sudo vim /etc/profile
+	... // 同上
+
+
+## Bandicam: initialze
+
+参考: 
+<https://www.52pojie.cn/thread-865343-1-1.html>
+
+主程序下载: 
+<https://dl.bandicam.cn/bdcamsetup.exe>
+
+
+## Dns: get
+
+<http://tool.chinaz.com/dns?type=1&host=&ip=>
+
+
+## Git: GitHub: download
+
+参考: <https://g.widora.cn/>
+
+
+## Git: GitHub: faster
+
+	192.30.253.112 github.com
+	151.101.185.194 github.global.ssl.fastly.net
+	192.30.253.120 codeload.github.com
+
+
+## Git: erase
+
+	git checkout --orphan latest_branch
+	git add -A
+	git commit -am "commit message"
+	git branch -D master
+	git branch -m master
+	git push -f origin master
+	git push --set-upstream origin master
+
+
+## Git: exact ditectory
+
+```
+// 初始化空库
+$ mkdir devops
+$ cd devops
+$ git init
+
+// 拉取remote的all objects信息
+$ git remote add -f origin https://github.com/....git
+
+// 开启sparse clone
+$ git config core.sparsecheckout true
+
+// 设置需要pull的目录，*表示所有，!表示匹配相反的
+$ echo "devops" >> .git/info/sparse-checkout
+$ more .git/info/sparse-checkout
+
+// 将origin端需要pull的目录下的文件pull到本地
+$ git pull origin master
+```
+
+
+## Git: initialize
+
+	git clone ...
+	
+	git config --global user.email "...
+	git config --global user.name "...
+	git config --global credential.helper store
+
+	git config --global core.editor "vim"
+	
+	git add .
+	git commit -a
+	git push
+
+	git pull
+
+	git push origin master --force
+
+
+## Git: roll back
+
+	// 回到上个版本: 
+
+	git reset --hard HEAD^
+
+	// 回到前几个版本: 
+
+	git reset --hard HEAD~3
+	git reset --hard commit_id
+
+	git push origin HEAD --force
+
+
+## Golang: initialize
+
+```
+export GO111MODULE=on
+export GOPROXY=https://mirrors.aliyun.com/goproxy/
+
+```
+
+
+## HTML: Console: neteaseMusic: title
+
+在控制台中键入
+
+	var importJs=document.createElement('script')  //在页面新建一个script标签
+	importJs.setAttribute("type","text/javascript")  //给script标签增加type属性
+	importJs.setAttribute("src", 'http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js') //给script标签增加src属性， url地址为cdn公共库里的
+	document.getElementsByTagName("head")[0].appendChild(importJs) //把importJs标签添加在页面
+
+	$(".soil").text("")
+
+	var v=[];
+	$("b").each(function(i, i2){ v.push($(this).attr("title"));});
+
+	v
+
+
+## IOS: PUBG: better
+
+关闭查找iPhone
+
+运行iMazing
+
+点击【管理应用程序】，选择【设备】
+
+右键点击，选择【备份应用程序数据】
+
+点击“下一步”保存数据，然后又弹出一个界面就选“好”
+
+6.找到刚刚保存的数据文件【和平精英】，右键选择【用好压打开】，打开Container\Documents\ShadowTrackerExtra\Saved\Config\IOS，找到配置文件【UserCustom.ini】
+
+右键点击【UserCustom.ini】，选择【内部查看器打开】
+
+在UserCustom.ini文件的【UserCustom DeviceProfile】下一行添加下面四行代码，添加完毕之后记得保存
+
+	+CVars=r.PUBGDeviceFPSLow=60
+	+CVars=r.PUBGDeviceFPSMid=60
+	+CVars=r.PUBGDeviceFPSHigh=60
+	+CVars=r.PUBGDeviceFPSHDR=60
+
+打开iMazing点击【管理应用程序】，选择【设备】，下拉列表找到游戏“和平精英”右键点击“和平精英”，选择【恢复应用程序数据】
+
+手机运行“和平精英”，点击设置，帧率选择【极限】然后保存，不能进训练场和开始游戏！不能进训练场和开始游戏！不能进训练场和开始游戏！
+
+手机游戏不要关闭，再次用iMazing备份“和平精英”数据
+
+添加代码
+
+还原数据
+
+之后游戏不能选择其他画质了，不然又自动还原
+
+
+## Jupyterlab: initialize
+
+    pip install jupyterlab
+    echo > /data/data/com.termux/files/home/.jupyter/jupyter_notebook_config.py
+    vim /data/data/com.termux/files/home/.jupyter/jupyter_notebook_config.py
+    
+    c.NotebookApp.allow_remote_access = True
+    c.NotebookApp.open_browser = False
+    c.NotebookApp.ip='*'
+    
+    jupyter notebook --generate-config
+    jupyter-lab
+    
+    // 中文
+    pip install https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/jupyterhub/jupyterlab_language_pack_zh_CN-0.0.1.dev0-py2.py3-none-any.whl
+
+
+## Linux: Arch: Armv7: initialze
+
+Arch-linux-v7h-200208来自百度网盘139...的账号
+linux-deploy来自TIM
+vncviewer可来自play商店
+termux来自酷安
+ 
+
+
+## Linux: Arch: Chinese display
+
+	sudo pacman -Ss font chinese
+
+
+## Linux: Arch: Grub: time
 
 	sudo vim /etc/default/grub
 
@@ -146,7 +463,12 @@ repositories {
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 
-## ArchLinux: Setup: 源
+## Linux: Arch: Pacman: "error: failed to update core (unable to lock database)"
+
+	rm -f /var/lib/pacman/db.lck
+
+
+## Linux: Arch: Pacman: initialze
 
 	sudo vim /etc/pacman.conf
 
@@ -171,47 +493,22 @@ repositories {
 	sudo pacman-mirrors -i -c China -m rank
 
 
-## ArchLinux: armv7: 配置
-
-Arch-linux-v7h-200208来自百度网盘139...的账号
-linux-deploy来自TIM
-vncviewer可来自play商店
-termux来自酷安
- 
-
-
-## ArchLinux: pacman 提示 "error: failed to update core (unable to lock database)"
-
-	rm -f /var/lib/pacman/db.lck
-
-
-## ArchLinux: swap
-
-参考: 
-<https://wiki.archlinux.org/index.php/Swap>
-
-
-## ArchLinux: tty: 字体大小
-
-参考: 
-<https://wiki.ArchLinux.org/index.php/Linux_console#Fonts>
+## Linux: Arch: Pacman: install zst file
 
 	su
-	pacman -S terminus-font
-	ls /usr/share/kbd/consolefonts/ter-*
-	echo "setfont ter-c22b.psf"> ~/.bash_profile
+	cd /var/ca*/pac*/*/
+	cp ... /home
+	cd /home
+	tar -I zstd -xvf ..zst 
+	cp ... / -r
 
 
-## ArchLinux: tty: 自动登录 root
+## Linux: Arch: Pacman: overwrite
 
-	sudo vim /usr/lib/systemd/system/getty@.service
-
-	// ExecStart=-/sbin/agetty --noclear %I 38400 linux 
-	// 修改为: 
-	// ExecStart=-/sbin/agetty --noclear -a root %I 38400 linux 
+	sudo pacman -S --overwrite '*' ...
 
 
-## ArchLinux: tty: 鼠标
+## Linux: Arch: TTY: Mouse: initialize
 
 gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 
@@ -231,12 +528,47 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	systemctl restart gpm
 
 
-## ArchLinux: 中文
+## Linux: Arch: TTY: auto login as root
 
-	sudo pacman -Ss font chinese
+	sudo vim /usr/lib/systemd/system/getty@.service
+
+	// ExecStart=-/sbin/agetty --noclear %I 38400 linux 
+	// 修改为: 
+	// ExecStart=-/sbin/agetty --noclear -a root %I 38400 linux 
 
 
-## ArchLinux: 安装
+## Linux: Arch: TTY: font size
+
+参考: 
+<https://wiki.ArchLinux.org/index.php/Linux_console#Fonts>
+
+	su
+	pacman -S terminus-font
+	ls /usr/share/kbd/consolefonts/ter-*
+	echo "setfont ter-c22b.psf"> ~/.bash_profile
+
+
+## Linux: Arch: add user
+
+	su
+	useradd -m -g users -s /bin/bash USERNAME
+	passwd USERNAME
+
+
+## Linux: Arch: clean pkg cache
+
+	sudo rm /var/cache/pacman/pkg/*
+
+
+## Linux: Arch: ignore GPG key
+
+	vim /etc/pacman.conf
+	// SigLevel=Never
+
+	rm -rf /etc/pacman.d/gunpg
+
+
+## Linux: Arch: initalize
 
 下载位置: <https://mirrors.tuna.tsinghua.edu.cn/ArchLinux/iso/latest/>
 
@@ -302,7 +634,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	# pacman -S xorg xorg-server gnome gnome-extra && systemctl enable gdm.service && reboot
 
 
-## ArchLinux: 查看软件包安装历史
+## Linux: Arch: package history
  
 	vim /var/log/pacman.log
 
@@ -311,33 +643,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	pacman -Qe
 
 
-## ArchLinux: 添加用户
-
-	su
-	useradd -m -g users -s /bin/bash USERNAME
-	passwd USERNAME
-
-
-## ArchLinux: 清理软件包缓存
-
-	sudo rm /var/cache/pacman/pkg/*
-
-
-## Archlinux: bash\_logout
-
-	rm .bash_history
-
-
-## Archlinux: proxy
-
-	export http_proxy=http://10.203.0.1:5187/
-	export https_proxy=$http_proxy
-	export ftp_proxy=$http_proxy
-	export rsync_proxy=$http_proxy
-	export no_proxy=\"localhost,127.0.0.1,localaddress,.localdomain.com\"
-
-
-## Archlinux: 自动启动项: 手动设置
+## Linux: Arch: set autorun
 
 	su
 	cd /etc/systemd/system
@@ -354,193 +660,35 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	systemctl enable mongod.service
 
 
-## Archlinx: 中文输入法
+## Linux: Arch: set proxy
 
-	sudo pacman -Sy fcitx-configtool fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-sogoupinyin
-	sudo vim /etc/environment
+	export http_proxy=http://10.203.0.1:5187/
+	export https_proxy=$http_proxy
+	export ftp_proxy=$http_proxy
+	export rsync_proxy=$http_proxy
+	export no_proxy=\"localhost,127.0.0.1,localaddress,.localdomain.com\"
 
-	export XMODIFIERS="@im=fcitx"
-	export GTK_IM_MODULE=fcitx
-	export QT_IM_MODULE=fcitx
 
-	sudo vim /etc/profile
-	... // 同上
+## Linux: Arch: set swap
 
+<https://wiki.archlinux.org/index.php/Swap>
 
-## Bandicam: 破解
 
-参考: 
-<https://www.52pojie.cn/thread-865343-1-1.html>
+## Linux: Kernel
+ 
+<http://hurlex.0xffffff.org/> 
+<http://wiki.0xffffff.org/> 
+<http://www.osdever.net/bkerndev/Docs/gettingstarted.htm> 
+<http://www.jamesmolloy.co.uk/tutorial_html/> 
+<https://wiki.osdev.org/Main_Page> 
 
-主程序下载: 
-<https://dl.bandicam.cn/bdcamsetup.exe>
 
+## Luckypatchers: initialize
 
-## Clang: Setup: in-Windows
+<https://www.luckypatchers.com>
 
-参考: 
-<https://www.cnblogs.com/meteoric_cry/p/5063288.html> 
-<http://www.llvm.org/releases/download.html#3.7.0> 
-<http://mingw-w64.org/doku.php/download> 
 
-
-## Dns: 查询
-
-<http://tool.chinaz.com/dns?type=1&host=&ip=>
-
-
-## Export: Path
-
-	export PATH="$PATH:/...
-
-
-## Git: 
-
-	git clone ...
-	
-	git config --global user.email "...
-	git config --global user.name "...
-	git config --global credential.helper store
-
-	git config --global core.editor "vim"
-	
-	git add .
-	git commit -a
-	git push
-
-	git pull
-
-	git push origin master --force
-
-
-## Git: 仓库中指定子目录和指定文件
-
-```
-// 初始化空库
-$ mkdir devops
-$ cd devops
-$ git init
-
-// 拉取remote的all objects信息
-$ git remote add -f origin https://github.com/....git
-
-// 开启sparse clone
-$ git config core.sparsecheckout true
-
-// 设置需要pull的目录，*表示所有，!表示匹配相反的
-$ echo "devops" >> .git/info/sparse-checkout
-$ more .git/info/sparse-checkout
-
-// 将origin端需要pull的目录下的文件pull到本地
-$ git pull origin master
-```
-
-
-## Git: 删除全部提交
-
-	git checkout --orphan latest_branch
-	git add -A
-	git commit -am "commit message"
-	git branch -D master
-	git branch -m master
-	git push -f origin master
-	git push --set-upstream origin master
-
-
-## Git: 回滚
-
-	// 回到上个版本: 
-
-	git reset --hard HEAD^
-
-	// 回到前几个版本: 
-
-	git reset --hard HEAD~3
-	git reset --hard commit_id
-
-	git push origin HEAD --force
-
-
-## GitHub: 代下载
-
-参考: <https://g.widora.cn/>
-
-
-## GitHub: 访问慢下载慢
-
-	192.30.253.112 github.com
-	151.101.185.194 github.global.ssl.fastly.net
-	192.30.253.120 codeload.github.com
-
-
-## Golang: Setup: 源
-
-```
-export GO111MODULE=on
-export GOPROXY=https://mirrors.aliyun.com/goproxy/
-
-```
-
-
-## IOS: PUBG
-
-关闭查找iPhone
-
-运行iMazing
-
-点击【管理应用程序】，选择【设备】
-
-右键点击，选择【备份应用程序数据】
-
-点击“下一步”保存数据，然后又弹出一个界面就选“好”
-
-6.找到刚刚保存的数据文件【和平精英】，右键选择【用好压打开】，打开Container\Documents\ShadowTrackerExtra\Saved\Config\IOS，找到配置文件【UserCustom.ini】
-
-右键点击【UserCustom.ini】，选择【内部查看器打开】
-
-在UserCustom.ini文件的【UserCustom DeviceProfile】下一行添加下面四行代码，添加完毕之后记得保存
-
-	+CVars=r.PUBGDeviceFPSLow=60
-	+CVars=r.PUBGDeviceFPSMid=60
-	+CVars=r.PUBGDeviceFPSHigh=60
-	+CVars=r.PUBGDeviceFPSHDR=60
-
-打开iMazing点击【管理应用程序】，选择【设备】，下拉列表找到游戏“和平精英”右键点击“和平精英”，选择【恢复应用程序数据】
-
-手机运行“和平精英”，点击设置，帧率选择【极限】然后保存，不能进训练场和开始游戏！不能进训练场和开始游戏！不能进训练场和开始游戏！
-
-手机游戏不要关闭，再次用iMazing备份“和平精英”数据
-
-添加代码
-
-还原数据
-
-之后游戏不能选择其他画质了，不然又自动还原
-
-
-## Jupyter-Lab: Setup
-
-    pip install jupyterlab
-    echo > /data/data/com.termux/files/home/.jupyter/jupyter_notebook_config.py
-    vim /data/data/com.termux/files/home/.jupyter/jupyter_notebook_config.py
-    
-    c.NotebookApp.allow_remote_access = True
-    c.NotebookApp.open_browser = False
-    c.NotebookApp.ip='*'
-    
-    jupyter notebook --generate-config
-    jupyter-lab
-    
-    // 中文
-    pip install https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/jupyterhub/jupyterlab_language_pack_zh_CN-0.0.1.dev0-py2.py3-none-any.whl
-
-
-## Luckypatchers: 下载
-
-参考: <https://www.luckypatchers.com>
-
-
-## MacOS: 关闭睡眠模式
+## MacOS: dont sleep
 
 	su
 
@@ -549,12 +697,7 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	pmset -g
 
 
-## Magisk: 
-
-<https://topjohnwu.github.io/Magisk/guides.html>
-
-
-## Magisk: build.prop
+## Magisk: better
 
 	sudo vim /data/adb/modules/hosts/system/build.prop
 
@@ -576,7 +719,12 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	ro.media.enc.jpeg.quality=100
 
 
-## Markdown: pandoc 生成目录
+## Magisk: initialize
+
+<https://topjohnwu.github.io/Magisk/guides.html>
+
+
+## Markdown: Pandoc: initialize
 
 下载地址: <https://github.com/jgm/pandoc/releases>
 arm可在Arch仓库找到。
@@ -588,18 +736,9 @@ pandoc 默认生成三级目录。
 	// pandoc -s --toc --toc-depth=4 FAQ.md -o FAQ.md
 
 
-## Mongodb: Python
- 
-	from pymongo import MongoClient
-	MongoClient()[...][...].insert_one({"...":"...", ...})
-	MongoClient()[...][...].find({'...':{'$regex': '^%s' %context }}).count()
-	MongoClient()[...][...].find_one({'...':{'$regex': '^%s' %context }})['...']
+## NAS: initialize
 
-
-## NAS: 配置
-
- 参考: 
- <https://cloud.tencent.com/developer/article/1563182>
+<https://cloud.tencent.com/developer/article/1563182>
 
 	pacman -S samba
 	vim /etc/samba/smb.conf
@@ -636,72 +775,66 @@ pandoc 默认生成三级目录。
         writable = yes
 
 
-## Netron机器学习模型的查看器 
+## Netron
 
 <https://github.com/lutzroeder/netron/blob/master/README.md>
 
 
-## OS: 内核
+## Path
 
-参考: 
-<http://hurlex.0xffffff.org/> 
-<http://wiki.0xffffff.org/> 
-<http://www.osdever.net/bkerndev/Docs/gettingstarted.htm> 
-<http://www.jamesmolloy.co.uk/tutorial_html/> 
-<https://wiki.osdev.org/Main_Page> 
+	export PATH="$PATH:/...
 
 
-## Pacman: overwrite
-
-	sudo pacman -S --overwrite '*' ...
-
-
-## Pacman: 手动安装
-
-	su
-	cd /var/ca*/pac*/*/
-	cp ... /home
-	cd /home
-	tar -I zstd -xvf ..zst 
-	cp ... / -r
+## Python: MongoDB
+ 
+	from pymongo import MongoClient
+	MongoClient()[...][...].insert_one({"...":"...", ...})
+	MongoClient()[...][...].find({'...':{'$regex': '^%s' %context }}).count()
+	MongoClient()[...][...].find_one({'...':{'$regex': '^%s' %context }})['...']
 
 
 ## Python: PIL
 
-```
-pip install Pillow
-```
+	$ pip install Pillow
 
 
-## Python: PIL
+	from PIL import Image
 
-参考: <https://www.jb51.net/article/159654.htm>
-```
-from PIL import Image
-
-# 读取一张图片: 
-im=Image.open('/home/Picture/test.jpg')	
-# 显示一张图片: 
-im.show()
-# 保存图片: 
-im.save("save.gif","GIF") 
-# 创建新图片: 
-Image.new(mode,size)
-Image.new(mode,size,color)
-newImg = Image.new("RGBA",(640,480),(0,255,0))
-newImg.save("newImg.png","PNG")
-# 查看图像信息: 
-im.format, im.size, im.mode
-# 图片裁剪: 
-box=(100,100,500,500)
-# 设置要裁剪的区域
-region=im.crop(box) #此时，region是一个新的图像对象。
-# 改变图像的大小: 
-out=img.resize((128,128))#resize成128*128像素大小
-```
+	# 读取一张图片: 
+	im=Image.open('/home/Picture/test.jpg')	
+	# 显示一张图片: 
+	im.show()
+	# 保存图片: 
+	im.save("save.gif","GIF") 
+	# 创建新图片: 
+	Image.new(mode,size)
+	Image.new(mode,size,color)
+	newImg = Image.new("RGBA",(640,480),(0,255,0))
+	newImg.save("newImg.png","PNG")
+	# 查看图像信息: 
+	im.format, im.size, im.mode
+	# 图片裁剪: 
+	box=(100,100,500,500)
+	# 设置要裁剪的区域
+	region=im.crop(box) #此时，region是一个新的图像对象。
+	# 改变图像的大小: 
+	out=img.resize((128,128))#resize成128*128像素大小
 
 
-## Python: PIP: Setup: 源
+## Python: Pysqlcipher3
+
+pacman -S sqlcipher
+pip3 install pysqlcipher3
+
+
+## Python: VSCode: support cv2
+
+	ctrl+shift+p
+
+    "python.linting.pylintArgs": ["--generate-members"]
+
+
+## Python: pip: initialize
 
 ```
 pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/web/simple
@@ -711,7 +844,7 @@ python -m pip install --upgrade pip
 ```
 
 
-## Python: Proxy
+## Python: set proxy
 
 	import os
 
@@ -725,20 +858,7 @@ python -m pip install --upgrade pip
 	#your code goes here
 
 
-## Python: Pysqlcipher3
-
-pacman -S sqlcipher
-pip3 install pysqlcipher3
-
-
-## Python: VSCode: cv2
-
-	ctrl+shift+p
-
-    "python.linting.pylintArgs": ["--generate-members"]
-
-
-## RPI: Manjaro_arm: RPi.GPIO
+## RPI: Manjaro: RPi.GPIO
 
 	(sudo pacman -S python-pip)
 	(pacman -S python python-pip base-devel)
@@ -746,7 +866,7 @@ pip3 install pysqlcipher3
 	yay --aur python-raspberry-gpio
 
 
-## RPI: Manjaro_arm: vnc
+## RPI: Manjaro: vnc
 	
 	sudo pacman -S tigervnc
 	vncpasswd
@@ -801,7 +921,7 @@ pip3 install pysqlcipher3
 以 ...:5900 登陆
 
 
-## Re正则表达式
+## Re
 
 	\n 	匹配一个换行符。
 	\r 	匹配一个回车符。
@@ -821,28 +941,6 @@ pip3 install pysqlcipher3
 	\B 	非单词边界匹配。
 
 	eg: \b\S+
-
-
-## Rust.Cargo: 源
-
-```
-vim ~/.cargo/config
-
-[source.crates-io]
-replace-with = 'ustc'
-[source.ustc]
-registry = "git://mirrors.ustc.edu.cn/crates.io-index"
-```
-
-
-## Rust.Rustup: 源
-
-```
-// Windows
-set RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
-// Bash
-export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
-```
 
 
 ## Rust: Cargo: Error
@@ -867,6 +965,28 @@ cargo upgrade
 ```
 
 
+## Rust: Cargo: initialize
+
+```
+vim ~/.cargo/config
+
+[source.crates-io]
+replace-with = 'ustc'
+[source.ustc]
+registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+```
+
+
+## Rust: Rustup: initialize
+
+```
+// Windows
+set RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
+// Bash
+export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
+```
+
+
 ## TensorFlow: Could not find a version that satisfies the requirement tensorflow
 
 参考: <https://pypi.org/project/tensorflow/#files>
@@ -877,81 +997,6 @@ TensorFlow版本目前还不支持Python新版本。
 pip install tensorflow-cpu
 
 ```
-
-
-## Termux: 1
-
-	sed -i 's@^\(deb.*stable main\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/termux-packages-24 stable main@' $PREFIX/etc/apt/sources.list
-	sed -i 's@^\(deb.*games stable\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/game-packages-24 games stable@' $PREFIX/etc/apt/sources.list.d/game.list
-	sed -i 's@^\(deb.*science stable\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/science-packages-24 science stable@' $PREFIX/etc/apt/sources.list.d/science.list
-	apt update && apt upgrade
-	pkg install vim python git
-
-
-## Termux: 2.界面按键
-	
-	mkdir .termux
-	vim .termux/termux.properties
-
-	extra-keys = [ \
-	['ESC','HOME','UP','END','ENTER'], \
-	['CTRL','LEFT','DOWN','RIGHT','TAB'] \
-	]
-
-
-## Termux: 3.bashrc
-
-	vim .bashrc
-
-	alias p='python'
-	alias v='vim'
-	alias l='ls'
-	alias i='pkg install'
-	alias ii='pkg uninstall'
-	alias pi='pip install'
-	alias pii='pip uninstall'
-
-
-	alias r='rm -rf'
-	alias rm='rm -rf'
-	alias rmm='rm .bash_history > /dev/null 2>&1 && rm -rf /data/data/com.termux/cache/apt/*'
-
-	alias aa="su -c 'setprop service.adb.tcp.port 55051' &&su -c 'stop adbd' &&su -c 'start adbd'"
-	alias aaa='adb connect 127.0.0.1:55051 && adb devices'
-	alias h='htop'
-	alias hh='sudo swapoff /dev/block/zram0'
-	alias pmd='sudo pm disable'
-	alias pme='sudo pm enable'
-
-	alias mm='MINIO_ACCESS_KEY=shine MINIO_SECRET_KEY=sunshine /data/data/com.termux/files/home/minio server /storage/emulated/0 --address ":8080"'
-	# su -c 'iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to- port 8080'
-
-	alias c='python /data/data/com.termux/files/home/git.py/1.tools/8.cast-clipboard.py'
-	alias g='python /data/data/com.termux/files/home/git.py/1.tools/8.get-clipboard.py'
-	alias ft='python /data/data/com.termux/files/home/git.py/1.tools/5.file-transmission.py'
-	alias ftt='cd /storage/emulated/0/Download && python /data/data/com.termux/files/home/git.py/1.tools/5.file-transmission.py'
-	alias s='python /data/data/com.termux/files/home/git.py/5.excel/2.skystudio.py'
-
-	alias gp='git pull'
-	alias gpp="git add . && git commit -m 'AutoCommit' && git push"
-	alias gc='git clone'
-
-	alias vv='vim ~/.bashrc'
-
-	export API_KEY_3gy6=
-	export SECRET_KEY_3gy6=
-
-
-## Termux: 4.Numpy
-
-	curl -l https://its-pointless.github.io/setup-pointless-repo.sh|sh
-	pkg install numpy
-
-
-## Termux: 5.Minio
-
-	pkg install wget && wget https://dl.minio.io/server/minio/release/linux-arm/minio -c && chmod +x minio && su -c 'iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to- port 8080' && (MINIO_ACCESS_KEY=shine MINIO_SECRET_KEY=sunshine /data/data/com.termux/files/home/minio server /sdcard --address ":1080"&)
-	
 
 
 ## Tesserract
@@ -975,30 +1020,6 @@ VMware Workstation Pro 16 许可证密钥，批量永久激活:
 	ZF3R0-FHED2-M80TY-8QYGC-NPKYF
 	YF390-0HF8P-M81RQ-2DXQE-M2UT6
 	ZF71R-DMX85-08DQY-8YMNC-PPHV8
-
-
-## VSCode (Termux)
-
-	pkg uninstall -y git
-	pkg install -y python nodejs yarn git vim
-	yarn global add code-server
-	cd ~/.config/yarn/global/node_modules/code-server/lib/vscode/node_modules/spdlog/
-	vim binding.gyp
-
-	"targets": [{
-			"target_name": "spdlog",
-	+       "libraries": [ "-latomic" ],
-			"sources": [
-					"src/main.cc",
-					"src/logger.cc"
-			],
-
-	npm install
-	pkg install ripgrep -y
-	cd ~/.config/yarn/global/node_modules/code-server/lib/vscode/node_modules/vscode-ripgrep/bin
-	ln -s $(which rg) .
-	pkg install openssl-tool
-	code-server --bind-addr 0.0.0.0:8080 --disable-telemetry --auth none
 
 
 ## VSCode: 关闭侧边栏
@@ -1053,17 +1074,3 @@ VMware Workstation Pro 16 许可证密钥，批量永久激活:
 在“计划任务”中新建计划任务，以最高权限运行: 
 
 	w32tm /resync
-
-
-## Xiaomi: 线刷
-
-<http://www.miui.com/shuaji-393.html>  
-<https://xiaomirom.com/rom/redmi-note-9-4g-9t-lime-china-fastboot-recovery-rom/>  
-
-	fastboot.exe flash recovery twrp.img
-	fastboot.exe boot twrp.img
-
-
-##  论文: 下载
-
-<https://ifish.fun/paper/search>
