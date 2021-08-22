@@ -374,17 +374,20 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 
 在控制台中键入
 
-	var importJs=document.createElement('script')  //在页面新建一个script标签
-	importJs.setAttribute("type","text/javascript")  //给script标签增加type属性
-	importJs.setAttribute("src", 'http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js') //给script标签增加src属性， url地址为cdn公共库里的
-	document.getElementsByTagName("head")[0].appendChild(importJs) //把importJs标签添加在页面
+	var importJs=document.createElement('script')
+	importJs.setAttribute("type","text/javascript")
+	importJs.setAttribute("src", 'http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js')
+	document.getElementsByTagName("head")[0].appendChild(importJs)
 
-	$(".soil").text("")
-
+	try{$(".soil").text("");} catch (e) {console.log("jQuery尚未加载完成，在此之前请在检查元素中点击一下歌曲名"); throw 1;}
 	var v=[];
 	$("b").each(function(i, i2){ v.push($(this).attr("title"));});
-
-	v
+	if (v.length==0) {console.log("请在检查元素中点击一下歌曲名"); throw 1;}
+	var v2 = v.join("\n");
+	console.log(v2)
+	console.log("以上内容将被复制到剪贴板")
+	$('<textarea>').val(v2).appendTo('body').select();
+	document.execCommand('copy');
 
 
 ## IOS: PUBG: better
