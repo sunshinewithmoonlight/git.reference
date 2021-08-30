@@ -681,6 +681,34 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 <https://wiki.archlinux.org/index.php/Swap>
 
 
+## Linux: Debian: screen
+
+新建
+
+	screen -S 1
+
+隐藏	ctrl-a-d
+
+连接
+
+	screen -r 1
+
+列表
+
+	screen -ls
+
+
+## Linux: Debian: sshd: disable root login
+
+禁止 Root 用户通过 SSH 登陆
+
+	sudo vim /etc/ssh/sshd_config
+	
+		PermitRootLogin no
+
+	sudo systemctl restart sshd
+
+
 ## Linux: Kernel
  
 <http://hurlex.0xffffff.org/> 
