@@ -869,6 +869,11 @@ pip3 install pysqlcipher3
     "python.linting.pylintArgs": ["--generate-members"]
 
 
+## Python: pip: fix
+
+	sudo python3 -m pip install --upgrade pip
+
+
 ## Python: pip: initialize
 
 ```
@@ -1096,6 +1101,13 @@ VMware Workstation Pro 16 许可证密钥，批量永久激活:
 参考:   
 <https://blog.csdn.net/bbhdeal/article/details/81144783>
 <https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/>
+
+
+## Windows: powercfg
+
+卓越性能
+
+	powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
 
 
 ## Windows: 自动同步时间

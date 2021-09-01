@@ -1,8 +1,0 @@
-
-echo 'Use "cat *this_file | sudo sh" .'
-#sudo pacman-mirrors -i -c China -m rank
-sudo echo [archlinuxcn]>>/etc/pacman.conf
-sudo echo 'Server= https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch'>> /etc/pacman.conf
-sudo pacman -Syyu
-sudo pacman -S archlinuxcn-keyring --noconfirm
-sudo pacman -S archlinuxcn-mirrorlist-git --noconfirm

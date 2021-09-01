@@ -1,4 +1,0 @@
-adb shell pm list packages
-adb shell pm path com...
-adb pull /data/app/com...apk ~
- 
