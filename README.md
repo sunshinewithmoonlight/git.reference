@@ -681,21 +681,34 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 <https://wiki.archlinux.org/index.php/Swap>
 
 
+## Linux: Debian: desktop
+
+安装桌面
+
+	tasksel
+
+
 ## Linux: Debian: screen
 
 新建
 
 	screen -S 1
 
-隐藏	ctrl-a-d
+隐藏
+	
+	<ctrl>-<a>-<d>
 
 连接
 
-	screen -r 1
+	screen -r ...
 
 列表
 
 	screen -ls
+
+关闭
+
+	screen -XS ... quit
 
 
 ## Linux: Debian: sshd: disable root login
