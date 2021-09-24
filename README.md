@@ -1121,6 +1121,13 @@ VMware Workstation Pro 16 许可证密钥，批量永久激活:
 <https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/>
 
 
+## Windows: host
+
+<https://www.ipaddress.com/>
+
+	ipconfig /flushdns
+
+
 ## Windows: powercfg
 
 卓越性能
