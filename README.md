@@ -828,6 +828,23 @@ pandoc 默认生成三级目录。
 <https://github.com/lutzroeder/netron/blob/master/README.md>
 
 
+## Nodejs: npm: initialze
+
+	<https://nodejs.org/en/download/>
+	tar xvf *xz
+	sudo cp -r node*x64/{bin,include,lib,share} /usr/
+	npm config set registry https://registry.npm.taobao.org/
+
+
+## Nodejs: npm: vite: initialze
+
+	npm init @vitejs/app
+	npm install --save @vitejs/create-app
+	npm install --save vue-router@4
+	npm install
+	npm run dev
+
+
 ## Office365
 
 <https://www.ruanfun.com/214.html>
