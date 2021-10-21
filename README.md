@@ -447,16 +447,76 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
     pip install https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/jupyterhub/jupyterlab_language_pack_zh_CN-0.0.1.dev0-py2.py3-none-any.whl
 
 
-## Linux: Arch: Armv7: initialze
+## Linux: Arch
 
-Arch-linux-v7h-200208来自百度网盘139...的账号
-linux-deploy来自TIM
-vncviewer可来自play商店
-termux来自酷安
- 
+下载位置: <https://mirrors.tuna.tsinghua.edu.cn/ArchLinux/iso/latest/>
+
+	// # ls /sys/firmware/efi/efivars
+
+	# ping -c 3 www.baidu.com
+	# timedatectl set-ntp true
+	# fdisk -l
+	# fdisk -l /dev/sda
+	# fdisk /dev/sda
+
+	// 1 输出 n 创建分区
+	// 2 Partition type是分区类型，p是主分区，e是扩展分区，直接按回车键选择默认
+	// 3 Partition number是分区编号，直接按回车键选择默认
+	// 4 First sector是开始的部分，直接按回车键选择默认
+	// 5 Last sector是结尾的部分，输入 +50G，按回车键
+	// 6 输入p查看分区列表
+	// 7 输入w保存分区操作并继续安装系统。
+
+	# mkfs.ext4 /dev/sda1
+	# mount /dev/sda1 /mnt
+	# vim /etc/pacman.d/mirrorlist
+
+	// Server = http://mirrors.aliyun.com/ArchLinux/$repo/os/$arch
+	// Server = https://mirrors.tuna.tsinghua.edu.cn/ArchLinux/$repo/os/$arch
+
+	# pacman -Syy
+	// # pacman -S arch-install-scripts
+	# pacstrap /mnt base linux linux-firmware
+
+	# genfstab -U /mnt >> /mnt/etc/fstab
+	# arch-chroot /mnt
+	# ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+	# hwclock --systohc
+	# pacman -S vim dhcpcd
+	# systemctl enable dhcpcd
+
+	// # vim /etc/locale.gen
+	// zh_CN.UTF-8 UTF-8
+	
+	# vim /etc/hosts
+
+	// 127.0.0.1 localhost
+	// ::1 localhost
+	// 127.0.1.1 hellokitty.localdomain hellokitty
+
+	# echo "rm ~/.bash_history"> ~/.bash_logout
+
+	# passwd
+
+	# pacman -S grub
+	# grub-install /dev/sda
+	# grub-mkconfig -o /boot/grub/grub.cfg
+	
+	# exit
+	# reboot
+
+	// 安装运行 xfce4
+	# pacman -S xorg-server xorg-xinit xfce4 fcitx-im network-manager-applet xfce4-notifyd
+	# startxfce4
+
+	// 安装运行 gnome（未成功）
+	# pacman -S xorg xorg-server gnome gnome-extra && systemctl enable gdm.service && reboot
 
 
 ## Linux: Arch: Chinese display
+	
+	sudo vim /etc/locale.gen
+		zh_CN.UTF-8 UTF-8
 
 	sudo pacman -Ss font chinese
 
@@ -555,11 +615,115 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	echo "setfont ter-c22b.psf"> ~/.bash_profile
 
 
-## Linux: Arch: add user
+## Linux: Arch: TencentCloud
 
 	su
-	useradd -m -g users -s /bin/bash USERNAME
-	passwd USERNAME
+	mv arch* /arch.iso
+	mount /arch.iso /mnt
+	tree|grep vmlinuz
+	tree|grep .img
+	vim /boot/grub/grub.cfg
+
+		set timeout=600
+		menuentry "Archlinux Live (x86_64)" {
+			insmod iso9660
+			set isofile=/arch.iso
+			loopback lo0 ${isofile}
+			linux (lo0)/arch/boot/x86_64/vmlinuz archisolabel=ARCH_202002 img_dev=/dev/vda1 img_loop=${isofile} earlymodules=loop
+			initrd (lo0)/arch/boot/x86_64/archiso.img
+		}
+
+	reboot
+
+	mount -o rw,remount /dev/vda1
+	cd /run/archiso/img_dev
+	rm -rf [b-z]*
+	mount /dev/vda1 /mnt
+	vim /etc/pacman.d/mirrorlist
+
+		Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+
+	pacstrap /mnt base linux-lts linux-firmware
+	pacstrap /mnt base-devel grub openssh intel-ucode vim man dhcpcd tree htop git python python-pip tigervnc
+
+	genfstab -U /mnt >> /mnt/etc/fstab
+	arch-chroot /mnt
+	ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+	hwclock --systohc
+	vim /etc/locale.gen
+
+		en_US.UTF-8 UTF-8
+		ch_CN.UTF-8 UTF-8
+
+	locale-gen
+	vim /etc/locale.conf
+
+		LANG=en_US.UTF-8
+
+	vim /etc/hostname
+
+		myhostname
+
+	vim /etc/hosts
+
+		127.0.0.1	tencent
+		::1			tencent
+		127.0.1.1	tencent.localdomain	myhostname
+
+	passwd
+	UserAdd -m -g wheel Arch # -m Create Home Catalog
+	passwd arch
+	vim /etc/sudoers
+		
+		root ALL=(ALL) ALL
+		%wheel ALL=(ALL) NOPASSWD: ALL
+
+	grub-install --target=i386-pc /dev/vda
+	grub-mkconfig > /boot/grub/grub.cfg
+	systemctl enable dhcpcd
+	systemctl enable sshd
+	reboot
+	exit
+
+	su
+
+	pacman -S xorg-server xorg-xinit xfce4 fcitx-im network-manager-applet xfce4-notifyd
+	reboot
+
+	
+	vim ~/.bashrc
+
+		alias p='python'
+		alias v='vim'
+		alias l='ls'
+		alias r='rm -rf'
+		alias rm='rm -rf'
+		alias gc='git clone'
+		alias gp='git pull'
+		alias sl='screen -ls'
+		alias ss='screen -S'
+		alias s='screen -x'
+		alias vv='vim ~/.bashrc'
+		alias i='sudo pacman -S'
+		alias ir='sudo pacman -R'
+		alias is='sudo pacman -Ss'
+		alias iyu='sudo pacman -Syu'
+
+	vncpasswd
+
+	vncserver :1
+
+
+## Linux: Arch: User: add 
+
+	su
+	useradd -m -g users -s /bin/bash arch
+	passwd arch
+
+
+## Linux: Arch: User: switch
+
+	# su arch
 
 
 ## Linux: Arch: clean pkg cache
@@ -573,72 +737,6 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	// SigLevel=Never
 
 	rm -rf /etc/pacman.d/gunpg
-
-
-## Linux: Arch: initalize
-
-下载位置: <https://mirrors.tuna.tsinghua.edu.cn/ArchLinux/iso/latest/>
-
-	// # ls /sys/firmware/efi/efivars
-
-	# ping -c 3 www.baidu.com
-	# timedatectl set-ntp true
-	# fdisk -l
-	# fdisk -l /dev/sda
-	# fdisk /dev/sda
-
-	// 1 输出 n 创建分区
-	// 2 Partition type是分区类型，p是主分区，e是扩展分区，直接按回车键选择默认
-	// 3 Partition number是分区编号，直接按回车键选择默认
-	// 4 First sector是开始的部分，直接按回车键选择默认
-	// 5 Last sector是结尾的部分，输入 +50G，按回车键
-	// 6 输入p查看分区列表
-	// 7 输入w保存分区操作并继续安装系统。
-
-	# mkfs.ext4 /dev/sda1
-	# mount /dev/sda1 /mnt
-	# vim /etc/pacman.d/mirrorlist
-
-	// Server = http://mirrors.aliyun.com/ArchLinux/$repo/os/$arch
-	// Server = https://mirrors.tuna.tsinghua.edu.cn/ArchLinux/$repo/os/$arch
-
-	# pacman -Syy
-	// # pacman -S arch-install-scripts
-	# pacstrap /mnt base linux linux-firmware
-
-	# genfstab -U /mnt >> /mnt/etc/fstab
-	# arch-chroot /mnt
-	# ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-	# hwclock --systohc
-	# pacman -S vim dhcpcd
-	# systemctl enable dhcpcd
-
-	// # vim /etc/locale.gen
-	// zh_CN.UTF-8 UTF-8
-	
-	# vim /etc/hosts
-
-	// 127.0.0.1 localhost
-	// ::1 localhost
-	// 127.0.1.1 hellokitty.localdomain hellokitty
-
-	# echo "rm ~/.bash_history"> ~/.bash_logout
-
-	# passwd
-
-	# pacman -S grub
-	# grub-install /dev/sda
-	# grub-mkconfig -o /boot/grub/grub.cfg
-	
-	# exit
-	# reboot
-
-	// 安装运行 xfce4
-	# pacman -S xorg-server xorg-xinit xfce4 fcitx-im network-manager-applet xfce4-notifyd
-	# startxfce4
-
-	// 安装运行 gnome（未成功）
-	# pacman -S xorg xorg-server gnome gnome-extra && systemctl enable gdm.service && reboot
 
 
 ## Linux: Arch: package history
