@@ -1160,6 +1160,20 @@ export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
 ```
 
 
+## Steam: VAC
+
+- 关闭Steam
+
+	C:\Program Files (x86)\Steam\bin\SteamService.exe /repair
+	bcdedit /deletevalue nointegritychecks
+	bcdedit /deletevalue loadoptions
+	bcdedit /debug off
+	bcdedit /deletevalue nx
+	bcdedit.exe /set {current} nx OptIn
+
+- 重启电脑
+
+
 ## TensorFlow: Could not find a version that satisfies the requirement tensorflow
 
 参考: <https://pypi.org/project/tensorflow/#files>
