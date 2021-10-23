@@ -1009,12 +1009,7 @@ pip3 install pysqlcipher3
 
 ## Python: pip: initialize
 
-```
-pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/web/simple
-python -m pip install --upgrade pip
-// Writing to C:\Users\阳光灿烂\AppData\Roaming\pip\pip.ini
-
-```
+	pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 
 ## Python: set proxy
