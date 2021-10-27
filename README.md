@@ -139,7 +139,7 @@ termux::
 继续重新打开谷歌Play
 
 
-## Android: Termux: CodeServer: initialize
+## Android: Termux: CodeServer
 
 	pkg install -y python nodejs yarn vim
 	exit
@@ -221,7 +221,7 @@ termux::
 	export SECRET_KEY_3gy6=
 
 
-## Android: Termux: button: initialize
+## Android: Termux: button
 	
 	mkdir .termux
 	vim .termux/termux.properties
@@ -282,6 +282,25 @@ termux::
 <http://tool.chinaz.com/dns?type=1&host=&ip=>
 
 
+## Git
+
+	git clone ...
+	
+	git config --global user.email "...
+	git config --global user.name "...
+	git config --global credential.helper store
+
+	git config --global core.editor "vim"
+	
+	git add .
+	git commit -a
+	git push
+
+	git pull
+
+	git push origin master --force
+
+
 ## Git: GitHub: download
 
 参考: <https://g.widora.cn/>
@@ -328,25 +347,6 @@ $ git pull origin master
 ```
 
 
-## Git: initialize
-
-	git clone ...
-	
-	git config --global user.email "...
-	git config --global user.name "...
-	git config --global credential.helper store
-
-	git config --global core.editor "vim"
-	
-	git add .
-	git commit -a
-	git push
-
-	git pull
-
-	git push origin master --force
-
-
 ## Git: roll back
 
 	// 回到上个版本: 
@@ -361,7 +361,7 @@ $ git pull origin master
 	git push origin HEAD --force
 
 
-## Golang: initialize
+## Golang
 
 ```
 export GO111MODULE=on
@@ -430,7 +430,7 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 之后游戏不能选择其他画质了，不然又自动还原
 
 
-## Jupyterlab: initialize
+## Jupyterlab
 
     pip install jupyterlab
     echo > /data/data/com.termux/files/home/.jupyter/jupyter_notebook_config.py
@@ -575,7 +575,7 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	sudo pacman -S --overwrite '*' ...
 
 
-## Linux: Arch: TTY: Mouse: initialize
+## Linux: Arch: TTY: Mouse
 
 gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 
@@ -829,7 +829,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 <https://wiki.osdev.org/Main_Page> 
 
 
-## Luckypatchers: initialize
+## Luckypatchers
 
 <https://www.luckypatchers.com>
 
@@ -841,6 +841,11 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	pmset -a sleep 0; pmset -a hibernatemode 0; pmset -a disablesleep 1; pmset -a displaysleep 0; pmset -a autopoweroffdelay 0; pmset -a autopoweroff 0
 	
 	pmset -g
+
+
+## Magisk
+
+<https://topjohnwu.github.io/Magisk/guides.html>
 
 
 ## Magisk: better
@@ -865,12 +870,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	ro.media.enc.jpeg.quality=100
 
 
-## Magisk: initialize
-
-<https://topjohnwu.github.io/Magisk/guides.html>
-
-
-## Markdown: Pandoc: initialize
+## Markdown: Pandoc
 
 下载地址: <https://github.com/jgm/pandoc/releases>
 arm可在Arch仓库找到。
@@ -882,7 +882,7 @@ pandoc 默认生成三级目录。
 	// pandoc -s --toc --toc-depth=4 FAQ.md -o FAQ.md
 
 
-## NAS: initialize
+## NAS
 
 <https://cloud.tencent.com/developer/article/1563182>
 
@@ -1002,14 +1002,14 @@ pip3 install pysqlcipher3
     "python.linting.pylintArgs": ["--generate-members"]
 
 
+## Python: pip
+
+	pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+
 ## Python: pip: fix
 
 	sudo python3 -m pip install --upgrade pip
-
-
-## Python: pip: initialize
-
-	pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 
 ## Python: set proxy
@@ -1111,6 +1111,18 @@ pip3 install pysqlcipher3
 	eg: \b\S+
 
 
+## Rust: Cargo
+
+```
+vim ~/.cargo/config
+
+[source.crates-io]
+replace-with = 'ustc'
+[source.ustc]
+registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+```
+
+
 ## Rust: Cargo: Error
 
 ```
@@ -1133,19 +1145,7 @@ cargo upgrade
 ```
 
 
-## Rust: Cargo: initialize
-
-```
-vim ~/.cargo/config
-
-[source.crates-io]
-replace-with = 'ustc'
-[source.ustc]
-registry = "git://mirrors.ustc.edu.cn/crates.io-index"
-```
-
-
-## Rust: Rustup: initialize
+## Rust: Rustup
 
 ```
 // Windows
