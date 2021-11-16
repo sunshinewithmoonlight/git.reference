@@ -282,6 +282,16 @@ termux::
 <http://tool.chinaz.com/dns?type=1&host=&ip=>
 
 
+## Ffmpeg: cut
+
+	ffmpeg -ss 00:01:00 -i ...mp4 -o 00:02:00 -c copy o.mp4
+
+
+## Ffmpeg: m3u8
+
+	ffmpeg -i https...m3u8 -c copy -bsf:a aac_adtstoasc o.mp4
+
+
 ## Git
 
 	git clone ...
