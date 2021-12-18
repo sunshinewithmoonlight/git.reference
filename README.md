@@ -110,9 +110,14 @@ repositories {
 	}
 
 
-## Android: Adb server: initialze
+## Android: Adb
 
-参考: https://github.com/Nethesh/Termux-ADB/blob/master/README.md
+<https://developer.android.google.cn/studio/releases/platform-tools#downloads>
+
+
+## Android: Adb server
+
+<https://github.com/Nethesh/Termux-ADB/blob/master/README.md>
 
 连接vpn后继续
 安装: 
@@ -268,20 +273,6 @@ termux::
 	... // 同上
 
 
-## Bandicam: initialze
-
-参考: 
-<https://www.52pojie.cn/thread-865343-1-1.html>
-
-主程序下载: 
-<https://dl.bandicam.cn/bdcamsetup.exe>
-
-
-## Dns: get
-
-<http://tool.chinaz.com/dns?type=1&host=&ip=>
-
-
 ## Ffmpeg: cut
 
 	ffmpeg -ss 00:01:00 -i ...mp4 -o 00:02:00 -c copy o.mp4
@@ -402,6 +393,42 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	console.log("以上内容将被复制到剪贴板")
 	$('<textarea>').val(v2).appendTo('body').select();
 	document.execCommand('copy');
+
+
+## Html: Yuketang: call when exercise
+
+	var script = document.createElement('script');
+	script.src = "https://smtpjs.com/v3/smtp.js";
+	document.getElementsByTagName('head')[0].appendChild(script);
+	script = document.createElement('script');
+	script.src = "https://code.jquery.com/jquery-3.4.1.min.js";
+	document.getElementsByTagName('head')[0].appendChild(script);
+	sendAvailable= true
+
+	setTimeout(function(){
+	$("body").bind("DOMNodeInserted", function(e){
+	if ($(e.target).is('.page-exercise')){
+		if (sendAvailable){
+		sendAvailable= false
+		Email.send({
+			Host: "smtp.qq.com",
+			Username: "<replaceHere>@qq.com",
+			Password: "rgmttzzvexiiddcf",
+			To: '<replaceHere>@qq.com',
+			From: "<replaceHere>@qq.com",
+			Subject: "Exercise from Yu Ke Tang",
+			Body: ""
+			})
+			.then(function (message) {
+				console.log("Mail has been sent successfully")
+				setTimeout(function(){
+				sendAvailable= true;
+				}, 3000);
+			});
+		}
+	}
+	});
+	}, 1000);
 
 
 ## IOS: PUBG: better
@@ -703,6 +730,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	
 	vim ~/.bashrc
 
+		alias gg='reset && cargo build && cargo run'
 		alias p='python'
 		alias v='vim'
 		alias l='ls'
@@ -753,7 +781,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
  
 	vim /var/log/pacman.log
 
- 或者: 
+或者: 
 
 	pacman -Qe
 
