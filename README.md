@@ -574,27 +574,28 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 
 ## Linux: Arch: Pacman: initialze
 
-	sudo vim /etc/pacman.conf
+	echo [multilib]>> /etc/pacman.conf
+	echo Include = /etc/pacman.d/mirrorlist>> /etc/pacman.conf
+	echo [archlinuxcn]>> /etc/pacman.conf
+	echo SigLevel = Optional TrustAll>> /etc/pacman.conf
+	echo Server = http://mirrors.163.com/archlinux-cn/\$arch>> /etc/pacman.conf
+	echo # Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch>> /etc/pacman.conf
+	pacman -Syy
+	pacman -S yay --noconfirm
+	su arch
+	yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
 
-	// 将以下行取消注释
-	// # [multilib]
-	// # IncIude = /etc/pacman.d/mirrorlist
+- 安装code server
+	
+	~~~
+	yay -S code-server
+	~~~
 
-	sudo pacman -Syy
+- 手动更改源排名: 
 
-	// 加入以下内容
-	[archlinuxcn]
-	SigLevel = Optional TrustAll
-	Server = http://mirrors.163.com/archlinux-cn/$arch
-	# Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
-
-添加AUR源: yay 用户: 
-
-	yay --aururl “https://aur.tuna.tsinghua.edu.cn” --save
-
-手动更改源排名: 
-
+	~~~
 	sudo pacman-mirrors -i -c China -m rank
+	~~~
 
 
 ## Linux: Arch: Pacman: install zst file
@@ -688,59 +689,58 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	cd /run/archiso/img_dev
 	rm -rf [b-z]*
 	mount /dev/vda1 /mnt
-	vim /etc/pacman.d/mirrorlist
-	
-		Server = http://mirrors.aliyun.com/ArchLinux/$repo/os/$arch
-		Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
-
-	pacstrap /mnt base linux-lts linux-firmware
-	pacstrap /mnt base-devel grub openssh intel-ucode vim man dhcpcd tree htop git python python-pip tigervnc
+	echo Server = http://mirrors.aliyun.com/ArchLinux/\$repo/os/\$arch > /etc/pacman.d/mirrorlist
+	echo Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch >> /etc/pacman.d/mirrorlist
+	cat /etc/pacman.d/mirrorlist
+	pacstrap /mnt base linux-lts linux-firmware base-devel grub openssh intel-ucode vim man dhcpcd tree htop git python python-pip tigervnc screen
 
 	genfstab -U /mnt >> /mnt/etc/fstab
 	arch-chroot /mnt
 	ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 	hwclock --systohc
-	vim /etc/locale.gen
-
-		en_US.UTF-8 UTF-8
-		ch_CN.UTF-8 UTF-8
-
+	echo en_US.UTF-8 UTF-8 > /etc/locale.gen
+	echo ch_CN.UTF-8 UTF-8 >> /etc/locale.gen
 	locale-gen
-	vim /etc/locale.conf
-
-		LANG=en_US.UTF-8
-
-	vim /etc/hostname
-
-		myhostname
-
-	vim /etc/hosts
-
-		127.0.0.1	tencent
-		::1			tencent
-		127.0.1.1	tencent.localdomain	myhostname
-
+	echo LANG=en_US.UTF-8 > /etc/locale.conf
+	echo myhostname > /etc/hostname
+	echo 127.0.0.1	tencent > /etc/hosts
+	echo ::1        tencent >> /etc/hosts
+	echo 127.0.1.1	tencent.localdomain	myhostname >> /etc/hosts
+	echo PermitRootLogin no >> /etc/ssh/sshd_config
+	echo CilentAliveInterval 3600 >> /etc/ssh/sshd_config
+	echo CilentAliveCountMax 6 >> /etc/ssh/sshd_config
 	passwd
-	UserAdd -m -g wheel Arch # -m Create Home Catalog
-	passwd arch
-	vim /etc/sudoers
-		
-		root ALL=(ALL) ALL
-		%wheel ALL=(ALL) NOPASSWD: ALL
 
+	useradd -m -g wheel arch
+	passwd arch
+
+	echo root ALL=\(ALL\) ALL >> /etc/sudoers
+	echo %wheel ALL=\(ALL\) NOPASSWD: ALL >> /etc/sudoers
 	grub-install --target=i386-pc /dev/vda
 	grub-mkconfig > /boot/grub/grub.cfg
 	systemctl enable dhcpcd
 	systemctl enable sshd
-	reboot
+	echo [multilib]>> /etc/pacman.conf
+	echo Include = /etc/pacman.d/mirrorlist>> /etc/pacman.conf
+	echo [archlinuxcn]>> /etc/pacman.conf
+	echo SigLevel = Optional TrustAll>> /etc/pacman.conf
+	echo Server = http://mirrors.163.com/archlinux-cn/\$arch>> /etc/pacman.conf
+	echo # Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch>> /etc/pacman.conf
+	pacman -Syy
+	pacman -S yay --noconfirm
+	su arch
+	yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
+	yay -S code-server
+
 	exit
+	reboot
 
 	su
 
-	pacman -S xorg-server xorg-xinit xfce4 fcitx-im network-manager-applet xfce4-notifyd
+	pacman -S xorg-server xorg-xinit xfce4 network-manager-applet
 	reboot
-
 	
+	pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 	vim ~/.bashrc
 
 		alias gg='reset && cargo build && cargo run'
@@ -825,7 +825,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	export no_proxy=\"localhost,127.0.0.1,localaddress,.localdomain.com\"
 
 
-## Linux: Code-server
+## Linux: CodeServer
 
 	PASSWORD=... code-server --bind-addr 0.0.0.0:8081
 
