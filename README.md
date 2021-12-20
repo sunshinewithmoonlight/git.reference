@@ -707,8 +707,8 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	echo ::1        tencent >> /etc/hosts
 	echo 127.0.1.1	tencent.localdomain	myhostname >> /etc/hosts
 	echo PermitRootLogin no >> /etc/ssh/sshd_config
-	echo CilentAliveInterval 3600 >> /etc/ssh/sshd_config
-	echo CilentAliveCountMax 6 >> /etc/ssh/sshd_config
+	echo ClientAliveInterval 3600 >> /etc/ssh/sshd_config
+	echo ClientAliveCountMax 6 >> /etc/ssh/sshd_config
 	passwd
 
 	useradd -m -g wheel arch
