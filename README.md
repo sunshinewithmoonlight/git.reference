@@ -618,9 +618,10 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 <https://wiki.archlinux.org/index.php/Swap>
 
 	su
-	dd if=/dev/zero of=/swapfile bs=1M count=512 status=progress
+	dd if=/dev/zero of=/swapfile bs=2M count=1024 status=progress
 	chmod 600 /swapfile
 	chmod 600 /swapfile
+	mkswap /swapfile
 	swapon /swapfile
 	echo /swapfile none swap defaults 0 0 >> /etc/fstab
 
@@ -692,7 +693,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	echo Server = http://mirrors.aliyun.com/ArchLinux/\$repo/os/\$arch > /etc/pacman.d/mirrorlist
 	echo Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch >> /etc/pacman.d/mirrorlist
 	cat /etc/pacman.d/mirrorlist
-	pacstrap /mnt base linux-lts linux-firmware base-devel grub openssh intel-ucode vim man dhcpcd tree htop git python python-pip tigervnc screen
+	pacstrap /mnt base linux-lts linux-firmware base-devel grub openssh intel-ucode vim man dhcpcd tree htop git python python-pip tigervnc screen adobe-source-han-sans-cn-fonts
 
 	genfstab -U /mnt >> /mnt/etc/fstab
 	arch-chroot /mnt
@@ -731,6 +732,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	su arch
 	yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
 	yay -S code-server
+	yay -S google-chrome
 
 	exit
 	reboot
