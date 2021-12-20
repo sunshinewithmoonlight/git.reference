@@ -371,7 +371,7 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 ```
 
 
-## HTML: Console: neteaseMusic: title
+## Html: Inject: NeteaseMusic: title
 
 在控制台中键入
 
@@ -395,7 +395,7 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	document.execCommand('copy');
 
 
-## Html: Yuketang: call when exercise
+## Html: Inject: Yuketang: call when exercise
 
 	var script = document.createElement('script');
 	script.src = "https://smtpjs.com/v3/smtp.js";
@@ -612,6 +612,18 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	sudo pacman -S --overwrite '*' ...
 
 
+## Linux: Arch: Swap
+
+<https://wiki.archlinux.org/index.php/Swap>
+
+	su
+	dd if=/dev/zero of=/swapfile bs=1M count=512 status=progress
+	chmod 600 /swapfile
+	chmod 600 /swapfile
+	swapon /swapfile
+	echo /swapfile none swap defaults 0 0 >> /etc/fstab
+
+
 ## Linux: Arch: TTY: Mouse
 
 gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
@@ -666,8 +678,8 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 			insmod iso9660
 			set isofile=/arch.iso
 			loopback lo0 ${isofile}
-			linux (lo0)/arch/boot/x86_64/vmlinuz archisolabel=ARCH_202002 img_dev=/dev/vda1 img_loop=${isofile} earlymodules=loop
-			initrd (lo0)/arch/boot/x86_64/archiso.img
+			linux (lo0)/arch/boot/x86_64/vmlinuz-linux archisolabel=ARCH_202002 img_dev=/dev/vda1 img_loop=${isofile} earlymodules=loop
+			initrd (lo0)/arch/boot/x86_64/initramfs-linux.img
 		}
 
 	reboot
@@ -677,7 +689,8 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	rm -rf [b-z]*
 	mount /dev/vda1 /mnt
 	vim /etc/pacman.d/mirrorlist
-
+	
+		Server = http://mirrors.aliyun.com/ArchLinux/$repo/os/$arch
 		Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
 
 	pacstrap /mnt base linux-lts linux-firmware
@@ -812,12 +825,12 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	export no_proxy=\"localhost,127.0.0.1,localaddress,.localdomain.com\"
 
 
-## Linux: Arch: set swap
+## Linux: Code-server
 
-<https://wiki.archlinux.org/index.php/Swap>
+	PASSWORD=... code-server --bind-addr 0.0.0.0:8081
 
 
-## Linux: Debian: desktop
+## Linux: Debian: Desktop
 
 安装桌面
 
@@ -856,6 +869,11 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 		PermitRootLogin no
 
 	sudo systemctl restart sshd
+
+
+## Linux: Download
+
+	axel -a -n 20 ...
 
 
 ## Linux: Kernel
@@ -1308,3 +1326,8 @@ VMware Workstation Pro 16 许可证密钥，批量永久激活:
 在“计划任务”中新建计划任务，以最高权限运行: 
 
 	w32tm /resync
+
+
+## 在线工具: 解压
+
+<https://extract.me/>
