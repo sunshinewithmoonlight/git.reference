@@ -431,6 +431,55 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	}, 1000);
 
 
+- 油猴插件
+	
+	~~~
+	// ==UserScript==
+	// @name         雨课堂提醒
+	// @namespace    http://tampermonkey.net/
+	// @version      1
+	// @description  try to take over the world!
+	// @author       You
+	// @match        https://changjiang.yuketang.cn/lesson/fullscreen/*
+	// @icon         https://www.google.com/s2/favicons?domain=tampermonkey.net
+	// @grant        none
+	// @require      https://smtpjs.com/v3/smtp.js
+	// @require      https://code.jquery.com/jquery-3.4.1.min.js
+	// ==/UserScript==
+
+	(function(){
+
+	var sendAvailable= true
+
+	setTimeout(function(){
+	$("body").bind("DOMNodeInserted", function(e){
+		console.log(e.target)
+	if ($(e.target).is('.page-exercise')){
+		if (sendAvailable){
+		sendAvailable= false
+		Email.send({
+			Host: "smtp.qq.com",
+			Username: "2907821379@qq.com",
+			Password: "rgmttzzvexiiddcf",
+			To: '2907821379@qq.com',
+			From: "2907821379@qq.com",
+			Subject: "Exercise from Yu Ke Tang",
+			Body: ""
+			})
+			.then(function (message) {
+				console.log("Mail has been sent successfully")
+				setTimeout(function(){
+				sendAvailable= true;
+				}, 3000);
+			});
+		}
+	}
+	});
+	}, 1000);
+	})();
+	~~~
+
+
 ## IOS: PUBG: better
 
 关闭查找iPhone
@@ -1003,7 +1052,8 @@ pandoc 默认生成三级目录。
 
 ## Office365
 
-<https://www.ruanfun.com/214.html>
+<https://www.ruanfun.com/>
+<https://www.luymm.com/archives/420/>
 
 
 ## Path
