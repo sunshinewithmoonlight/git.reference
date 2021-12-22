@@ -273,6 +273,15 @@ termux::
 	... // 同上
 
 
+## Chrome: 扩展
+
+<https://crxdl.com/>
+
+将下载来的文件后缀名 *.crx 改成 *.rar，解压这个压缩文件得到一个文件夹。
+如果解压出的文件夹中有"\_metadata"，将前面的"\_"去掉，否则无法加载。
+打开扩展程序页面，选中右上方开发人员模式复选框，点击载入正在开发的扩展程序，选中刚刚解压出来的文件夹。
+
+
 ## Ffmpeg: cut
 
 	ffmpeg -ss 00:01:00 -i ...mp4 -o 00:02:00 -c copy o.mp4
@@ -302,12 +311,12 @@ termux::
 	git push origin master --force
 
 
-## Git: GitHub: download
+## Git: GitHub
 
-参考: <https://g.widora.cn/>
+<https://d.serctl.com/?dl_start>
 
 
-## Git: GitHub: faster
+## Git: GitHub: hosts
 
 	192.30.253.112 github.com
 	151.101.185.194 github.global.ssl.fastly.net
@@ -1056,6 +1065,15 @@ pandoc 默认生成三级目录。
 <https://www.luymm.com/archives/420/>
 
 
+## Pacman: Remove
+
+	sudo pacman -Rcns ...
+
+删除孤包
+
+	sudo pacman -R $(pacman -Qdtq)
+
+
 ## Path
 
 	export PATH="$PATH:/...
@@ -1332,15 +1350,6 @@ VMware Workstation Pro 16 许可证密钥，批量永久激活:
 ## Wget
 
 	screen wget -r https://mirrors.sirung.com/source/fuchsia/ -c -np -T 5 -t 0
-
-
-## Windows: Microsoft Edge: 扩展
-
-扩展的下载: <https://crxdl.com/>
-
-将下载来的文件后缀名 *.crx 改成 *.rar，解压这个压缩文件得到一个文件夹。
-如果解压出的文件夹中有"\_metadata"，将前面的"\_"去掉，否则无法加载。
-打开扩展程序页面，选中右上方开发人员模式复选框，点击载入正在开发的扩展程序，选中刚刚解压出来的文件夹。
 
 
 ## Windows: Microsoft Visual C++ Build Tools下载
