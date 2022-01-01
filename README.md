@@ -21,7 +21,7 @@ adb tcpip 5555
 su
 setprop service.adb.tcp.port 5555 && stop adbd && start adbd
 ```
-连接: 
+: 
 ```
 adb connect ...:5555
 ```
@@ -271,6 +271,48 @@ termux::
 
 	sudo vim /etc/profile
 	... // 同上
+
+
+## BaiduAPI: translate 百度翻译API
+
+<https://fanyi-api.baidu.com/manage/developer>
+
+~~~
+import requests
+import random
+import json
+from hashlib import md5
+
+appid = 'INPUT_YOUR_APPID'
+appkey = 'INPUT_YOUR_APPKEY'
+
+# For list of language codes, please refer to `https://api.fanyi.baidu.com/doc/21`
+from_lang = 'en'
+to_lang =  'zh'
+
+endpoint = 'http://api.fanyi.baidu.com'
+path = '/api/trans/vip/translate'
+url = endpoint + path
+
+query = 'Hello World! This is 1st paragraph.\nThis is 2nd paragraph.'
+
+# Generate salt and sign
+def make_md5(s, encoding='utf-8'):
+    return md5(s.encode(encoding)).hexdigest()
+
+salt = random.randint(32768, 65536)
+sign = make_md5(appid + query + str(salt) + appkey)
+
+headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+payload = {'appid': appid, 'q': query, 'from': from_lang, 'to': to_lang, 'salt': salt, 'sign': sign}
+
+r = requests.post(url, params=payload, headers=headers)
+result = r.json()
+
+# Show response
+print(json.dumps(result, indent=4, ensure_ascii=False))
+
+~~~
 
 
 ## Chrome: 扩展
@@ -909,7 +951,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	
 	<ctrl>-<a>-<d>
 
-连接
+
 
 	screen -r ...
 
