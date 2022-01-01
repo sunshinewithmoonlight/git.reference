@@ -421,10 +421,10 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 		sendAvailable= false
 		Email.send({
 			Host: "smtp.qq.com",
-			Username: "<replaceHere>@qq.com",
-			Password: "rgmttzzvexiiddcf",
-			To: '<replaceHere>@qq.com',
-			From: "<replaceHere>@qq.com",
+			Username: "...",
+			Password: "...",
+			To: '...',
+			From: "...",
 			Subject: "Exercise from Yu Ke Tang",
 			Body: ""
 			})
@@ -468,10 +468,10 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 		sendAvailable= false
 		Email.send({
 			Host: "smtp.qq.com",
-			Username: "2907821379@qq.com",
-			Password: "rgmttzzvexiiddcf",
-			To: '2907821379@qq.com',
-			From: "2907821379@qq.com",
+			Username: "...",
+			Password: "...",
+			To: '...',
+			From: "...",
 			Subject: "Exercise from Yu Ke Tang",
 			Body: ""
 			})
@@ -766,12 +766,14 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	echo ::1        tencent >> /etc/hosts
 	echo 127.0.1.1	tencent.localdomain	myhostname >> /etc/hosts
 	echo PermitRootLogin no >> /etc/ssh/sshd_config
-	echo ClientAliveInterval 3600 >> /etc/ssh/sshd_config
-	echo ClientAliveCountMax 6 >> /etc/ssh/sshd_config
-	passwd
+	vim /etc/ssh/sshd_config
+
+		ClientAliveInterval 3600 
+		ClientAliveCountMax 6
 
 	useradd -m -g wheel arch
 	passwd arch
+	passwd
 
 	echo root ALL=\(ALL\) ALL >> /etc/sudoers
 	echo %wheel ALL=\(ALL\) NOPASSWD: ALL >> /etc/sudoers
@@ -950,6 +952,11 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 <https://www.luckypatchers.com>
 
 
+## MacOS: Brew
+
+<https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/>
+
+
 ## MacOS: dont sleep
 
 	su
@@ -957,6 +964,15 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	pmset -a sleep 0; pmset -a hibernatemode 0; pmset -a disablesleep 1; pmset -a displaysleep 0; pmset -a autopoweroffdelay 0; pmset -a autopoweroff 0
 	
 	pmset -g
+
+
+## MacOS: 删除开机界面上的其他用户登陆选项
+
+执行如下命令后重启：
+
+~~~
+sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWOTHERUSERS_MANAGED -bool FALSE
+~~~
 
 
 ## Magisk
@@ -1374,6 +1390,32 @@ VMware Workstation Pro 16 许可证密钥，批量永久激活:
 卓越性能
 
 	powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
+
+
+## Windows: pppoe reconnect
+
+- 1.bat :
+
+~~~
+:start
+ping -n 2 114.114.114.114 | find "TTL=" >nul
+if errorlevel 1 (
+    rasdial rasdial 2021120326@cmu Cong@1998
+)
+timeout 5
+goto:start
+~~~
+
+- 1.vbs :
+
+~~~
+set v=wscript.createobject("wscript.shell")
+v.run "C:\Users\Shine\runtime\1.bat /start", 0
+~~~
+
+- regedit :
+
+计算机\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
 
 
 ## Windows: 自动同步时间
