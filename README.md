@@ -920,6 +920,7 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 关闭
 
 	screen -XS ... quit
+	screen -XS ... kill
 
 
 ## Linux: Debian: sshd: disable root login
