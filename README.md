@@ -260,6 +260,13 @@ termux::
 	fastboot.exe boot twrp.img
 
 
+## ArchLinux: zip multipart
+
+~~~
+zip -r -s 1g output.zip ...
+~~~
+
+
 ## Archlinx: Chinese input method
 
 	sudo pacman -Sy fcitx-configtool fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-sogoupinyin
@@ -1472,6 +1479,24 @@ v.run "C:\Users\Shine\runtime\1.bat /start", 0
 在“计划任务”中新建计划任务，以最高权限运行: 
 
 	w32tm /resync
+
+
+## ssh: without password
+
+- client
+
+~~~
+ssh-keygen -t rsa
+scp id_rsa.pub ...@...:~/
+~~~
+
+- host
+
+~~~
+cd
+mkdir ~/.ssh
+mv id_rsa.pub ~/.ssh/
+~~~
 
 
 ## 在线工具: 解压
