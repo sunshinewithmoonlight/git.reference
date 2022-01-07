@@ -1007,6 +1007,14 @@ zip -r -s 1g output.zip ...
 <https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/>
 
 
+## MacOS: Console: wifi
+
+~~~
+networksetup -listallhardwareports
+networksetup -setairportnetwork en... ... ...
+~~~
+
+
 ## MacOS: dont sleep
 
 	su
