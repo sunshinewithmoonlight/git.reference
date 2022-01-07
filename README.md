@@ -260,26 +260,6 @@ termux::
 	fastboot.exe boot twrp.img
 
 
-## ArchLinux: zip multipart
-
-~~~
-zip -r -s 1g output.zip ...
-~~~
-
-
-## Archlinx: Chinese input method
-
-	sudo pacman -Sy fcitx-configtool fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-sogoupinyin
-	sudo vim /etc/environment
-
-	export XMODIFIERS="@im=fcitx"
-	export GTK_IM_MODULE=fcitx
-	export QT_IM_MODULE=fcitx
-
-	sudo vim /etc/profile
-	... // 同上
-
-
 ## BaiduAPI: translate 百度翻译API
 
 <https://fanyi-api.baidu.com/manage/developer>
@@ -997,6 +977,26 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 <https://wiki.osdev.org/Main_Page> 
 
 
+## Linux: zip multipart
+
+~~~
+zip -r -s 1g output.zip ...
+~~~
+
+
+## Linx: Arch: Chinese input method
+
+	sudo pacman -Sy fcitx-configtool fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-sogoupinyin
+	sudo vim /etc/environment
+
+	export XMODIFIERS="@im=fcitx"
+	export GTK_IM_MODULE=fcitx
+	export QT_IM_MODULE=fcitx
+
+	sudo vim /etc/profile
+	... // 同上
+
+
 ## Luckypatchers
 
 <https://www.luckypatchers.com>
@@ -1014,6 +1014,29 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	pmset -a sleep 0; pmset -a hibernatemode 0; pmset -a disablesleep 1; pmset -a displaysleep 0; pmset -a autopoweroffdelay 0; pmset -a autopoweroff 0
 	
 	pmset -g
+
+
+## MacOS: zprofile
+
+~~~
+vim ~/.zprofile
+
+alias p='python3'
+alias v='vim'
+alias l='ls'
+alias r='rm -rf'
+alias rm='rm -rf'
+alias gc='git clone'
+alias gp='git pull'
+alias sl='screen -ls'
+alias ss='screen -S'
+alias s='screen -x'
+alias vv='vim ~/.zprofile'
+alias i='brew install'
+alias ir='brew uninstall'
+alias is='brew search'
+
+~~~
 
 
 ## MacOS: 删除开机界面上的其他用户登陆选项
