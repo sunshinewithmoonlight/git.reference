@@ -1,3 +1,12 @@
+## ADB: extract apk
+
+~~~
+adb shell pm list
+adb shell pm path com...
+adb pull ... .
+~~~
+
+
 ## ADB: input
 参考: <https://blog.bihe0832.com/adb-shell-input.html>
 ```
