@@ -1526,7 +1526,8 @@ scp id_rsa.pub ...@...:~/
 ~~~
 cd
 mkdir ~/.ssh
-mv id_rsa.pub ~/.ssh/
+cat ~/id_rsa.pub >> .ssh/authorized_keys
+rm ~/id_rsa.pub
 ~~~
 
 
