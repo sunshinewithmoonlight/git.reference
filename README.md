@@ -986,7 +986,16 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 <https://wiki.osdev.org/Main_Page> 
 
 
-## Linux: zip multipart
+## Linux: archive: rar
+
+解压
+
+~~~
+unrar e ...rar ./dir/
+~~~
+
+
+## Linux: archive: zip multipart
 
 ~~~
 zip -r -s 1g output.zip ...
