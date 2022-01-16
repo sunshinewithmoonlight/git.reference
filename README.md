@@ -320,6 +320,11 @@ print(json.dumps(result, indent=4, ensure_ascii=False))
 打开扩展程序页面，选中右上方开发人员模式复选框，点击载入正在开发的扩展程序，选中刚刚解压出来的文件夹。
 
 
+## CodeServer
+
+<https://github.com/coder/code-server/releases/download/v4.0.1/code-server-4.0.1-linux-amd64.tar.gz>
+
+
 ## Crawl: NeteaseMusic: title
 
 在控制台中键入
@@ -780,6 +785,16 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 		zh_CN.UTF-8 UTF-8
 
 	sudo pacman -Ss font chinese
+
+
+## Linux: Arch: EasyConnect
+
+yay -S easyconnect
+sudo reboot
+
+sudo pacman -S lib32-gtk2 dbus-glib
+
+sudo /usr/share/sangfor/EasyConnect/resources/shell/sslservice.sh
 
 
 ## Linux: Arch: Grub: time
@@ -1287,10 +1302,13 @@ pandoc 默认生成三级目录。
 
 ## Nodejs: npm: initialze
 
-	<https://nodejs.org/en/download/>
-	tar xvf *xz
-	sudo cp -r node*x64/{bin,include,lib,share} /usr/
-	npm config set registry https://registry.npm.taobao.org/
+<https://nodejs.org/en/download/>
+
+~~~
+tar xvf *xz
+sudo cp -r node*x64/{bin,include,lib,share} /usr/
+npm config set registry https://registry.npm.taobao.org/
+~~~
 
 
 ## Nodejs: npm: vite: initialze
