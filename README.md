@@ -320,6 +320,158 @@ print(json.dumps(result, indent=4, ensure_ascii=False))
 打开扩展程序页面，选中右上方开发人员模式复选框，点击载入正在开发的扩展程序，选中刚刚解压出来的文件夹。
 
 
+## Crawl: NeteaseMusic: title
+
+在控制台中键入
+
+	var importJs=document.createElement('script')
+	importJs.setAttribute("type","text/javascript")
+	importJs.setAttribute("src", 'http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js')
+	document.getElementsByTagName("head")[0].appendChild(importJs)
+	console.log("如果遇到错误，可能是jQuery尚未加载完成；如果复制的结果为空，请先在检查元素中点击一下歌曲名（刷新页面后点击一次即可）。请重新执行该脚本");
+	var v=[];
+	var name="";
+	var author="";
+	$("b").each(function(i, i2){
+		name= $(this).attr("title")
+		author= $(this).parents("td").next().next().children("div").attr("title")
+		v.push(name+" "+author);
+		});
+	var v2 = v.join("\n");
+	console.log(v2)
+	console.log("以上内容将被复制到剪贴板")
+	$('<textarea>').val(v2).appendTo('body').select();
+	document.execCommand('copy');
+
+
+## Crawl: 中科院分区表
+
+- 仍然存在延时不够未能保存当前页面数据的bug
+
+<http://www.fenqubiao.com>
+
+~~~
+function table2JSON(){
+    $('tbody tr').each(function(){
+        objGlobal[$(this).find('td a').text()] = {
+            "title": $(this).find('td a').text(),
+            "review": $(this).children('td').eq(2).text(),
+            "q": $(this).children('td').eq(3).text().replace(' ', ''),
+            "if3": $(this).children('td').eq(4).text(),
+        }
+    })
+}
+
+function table2JSON_next(i){
+    console.log(i);
+    __doPostBack('ctl00$ContentPlaceHolder1$AspNetPager1', i)
+    setTimeout( "table2JSON()" , 1700);
+}
+
+function save2localStorage(){
+    console.log(Object.keys(objGlobal).length +" items renewed. Stringified JSON has been saved into localStorage::journalDictonary_outputs. Exec ' Object.keys(JSON.parse(localStorage.getItem('journalDictonary_outputs'))).length ' if needed.");
+
+    let vW = { ...JSON.parse(localStorage.getItem('journalDictonary_outputs')) , ...objGlobal}
+    localStorage.setItem('journalDictonary_outputs', JSON.stringify(vW))
+}
+
+function start_func(){
+
+    var v = $('#ContentPlaceHolder1_AspNetPager1 a:last').attr('href').split("'")
+    var vLength = v.length
+    var totalPage = parseInt( v[vLength-2] )
+    if (localStorage.getItem('journalDictonary_outputs')===null){
+        localStorage.setItem('journalDictonary_outputs', JSON.stringify({}))
+    }
+    objGlobal = {}
+    table2JSON()
+    for ( let i=2; i <= totalPage; i++ ){
+
+        setTimeout( "table2JSON_next("+ i +")" , i*2000)
+    }
+
+    setTimeout( "save2localStorage()" , (totalPage+2)*2000)
+}
+
+function nextP(i){
+    __doPostBack('ctl00$ContentPlaceHolder1$AspNetPager1', i)
+}
+
+function init_start2(){
+    var v = $('#ContentPlaceHolder1_AspNetPager1 a:last').attr('href').split("'")
+    var vLength = v.length
+    var totalPage = parseInt( v[vLength-2] )
+    console.log("Total pages number: " + totalPage)
+    for ( let i=2; i <= totalPage; i++ ){
+        setTimeout("nextP("+ i +")" , i*1000)
+
+    }
+    setTimeout("nextP(1)" , (totalPage+1)*1000)
+    setTimeout("start_func()", (totalPage+2)*1000)
+}
+
+function init_start(){
+    
+    $('#ContentPlaceHolder1_btnSearch').trigger('click')
+    setTimeout( "init_start2()", 500 )
+
+}
+
+function copy(){
+    var v = localStorage.getItem('journalDictonary_outputs')
+    $('<textarea>').val(v).appendTo('body').select();
+    document.execCommand('copy');
+}
+
+init_start()
+
+
+/*
+Object.keys(JSON.parse(localStorage.getItem('journalDictonary_outputs'))).length
+
+localStorage.removeItem('journalDictonary_outputs')
+
+
+    //setTimeout("__doPostBack('ctl00$ContentPlaceHolder1$AspNetPager1', "+ i +")", 1000)
+    // $('input[type=text]').val(i)
+    // $('input[type=submit]').trigger('click')
+function sleep(ms) {
+    return new Promise((resolve, reject)=>setTimeout(resolve, ms));
+}
+
+
+
+function table2JSON(v){
+    $('tbody tr').each(function(){
+        v[$(this).find('td a').text()] = {
+            "title": $(this).find('td a').text(),
+            "review": $(this).children('td').eq(2).text(),
+            "q": $(this).children('td').eq(3).text(),
+            "if3": $(this).children('td').eq(4).text(),
+        }
+    })
+}
+
+const p = new Promise((resolve,reject) => {
+    resolve({})
+})
+
+p.then( v => {
+    console.log(v)
+    return v+1
+
+}).then( v=>{
+    setTimeout("console.log("+ v +")", 1000);
+    return v+1
+
+}).then( v=>{
+    console.log(v)
+
+});
+*/
+~~~
+
+
 ## Ffmpeg: cut
 
 	ffmpeg -ss 00:01:00 -i ...mp4 -o 00:02:00 -c copy o.mp4
@@ -416,30 +568,6 @@ export GO111MODULE=on
 export GOPROXY=https://mirrors.aliyun.com/goproxy/
 
 ```
-
-
-## Html: Inject: NeteaseMusic: title
-
-在控制台中键入
-
-	var importJs=document.createElement('script')
-	importJs.setAttribute("type","text/javascript")
-	importJs.setAttribute("src", 'http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js')
-	document.getElementsByTagName("head")[0].appendChild(importJs)
-	console.log("如果遇到错误，可能是jQuery尚未加载完成；如果复制的结果为空，请先在检查元素中点击一下歌曲名（刷新页面后点击一次即可）。请重新执行该脚本");
-	var v=[];
-	var name="";
-	var author="";
-	$("b").each(function(i, i2){
-		name= $(this).attr("title")
-		author= $(this).parents("td").next().next().children("div").attr("title")
-		v.push(name+" "+author);
-		});
-	var v2 = v.join("\n");
-	console.log(v2)
-	console.log("以上内容将被复制到剪贴板")
-	$('<textarea>').val(v2).appendTo('body').select();
-	document.execCommand('copy');
 
 
 ## Html: Inject: Yuketang: call when exercise
