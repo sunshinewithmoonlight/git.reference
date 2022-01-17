@@ -320,11 +320,6 @@ print(json.dumps(result, indent=4, ensure_ascii=False))
 打开扩展程序页面，选中右上方开发人员模式复选框，点击载入正在开发的扩展程序，选中刚刚解压出来的文件夹。
 
 
-## CodeServer
-
-	yay -S code-server
-
-
 ## Crawl: NeteaseMusic: title
 
 在控制台中键入
@@ -816,6 +811,19 @@ sudo pacman -Ss font chinese
 ~~~
 
 
+## Linux: Arch: Chinese input method
+
+	sudo pacman -Sy fcitx-configtool fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-sogoupinyin
+	sudo vim /etc/environment
+
+	export XMODIFIERS="@im=fcitx"
+	export GTK_IM_MODULE=fcitx
+	export QT_IM_MODULE=fcitx
+
+	sudo vim /etc/profile
+	... // 同上
+
+
 ## Linux: Arch: EasyConnect
 
 ~~~
@@ -1078,6 +1086,13 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	pacman -Qe
 
 
+## Linux: Arch: proxy
+
+	yay -S proxyman-git
+	~/.local/bin/proxyman set
+	~/.local/bin/proxyman unset
+
+
 ## Linux: Arch: set autorun
 
 	su
@@ -1095,49 +1110,10 @@ gpm必须使用多个参数启动，参数在/etc/conf.d/gpm文件中指定。
 	systemctl enable mongod.service
 
 
-## Linux: Arch: set proxy
-
-	export http_proxy=http://10.203.0.1:5187/
-	export https_proxy=$http_proxy
-	export ftp_proxy=$http_proxy
-	export rsync_proxy=$http_proxy
-	export no_proxy=\"localhost,127.0.0.1,localaddress,.localdomain.com\"
-
-
 ## Linux: CodeServer
 
+	yay -S code-server
 	PASSWORD=... code-server --bind-addr 0.0.0.0:8081
-
-
-## Linux: Debian: Desktop
-
-安装桌面
-
-	tasksel
-
-
-## Linux: Debian: screen
-
-新建
-
-	screen -S 1
-
-隐藏
-	
-	<ctrl>-<a>-<d>
-
-
-
-	screen -r ...
-
-列表
-
-	screen -ls
-
-关闭
-
-	screen -XS ... quit
-	screen -XS ... kill
 
 
 ## Linux: Debian: sshd: disable root login
@@ -1181,17 +1157,28 @@ zip -r -s 1g output.zip ...
 ~~~
 
 
-## Linx: Arch: Chinese input method
+## Linux: screen
 
-	sudo pacman -Sy fcitx-configtool fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-sogoupinyin
-	sudo vim /etc/environment
+新建
 
-	export XMODIFIERS="@im=fcitx"
-	export GTK_IM_MODULE=fcitx
-	export QT_IM_MODULE=fcitx
+	screen -S 1
 
-	sudo vim /etc/profile
-	... // 同上
+隐藏
+	
+	<ctrl>-<a>-<d>
+
+
+
+	screen -r ...
+
+列表
+
+	screen -ls
+
+关闭
+
+	screen -XS ... quit
+	screen -XS ... kill
 
 
 ## Luckypatchers
