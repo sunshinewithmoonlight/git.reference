@@ -322,7 +322,7 @@ print(json.dumps(result, indent=4, ensure_ascii=False))
 
 ## CodeServer
 
-<https://github.com/coder/code-server/releases/download/v4.0.1/code-server-4.0.1-linux-amd64.tar.gz>
+	yay -S code-server
 
 
 ## Crawl: NeteaseMusic: title
@@ -577,39 +577,40 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 
 ## Html: Inject: Yuketang: call when exercise
 
-	var script = document.createElement('script');
-	script.src = "https://smtpjs.com/v3/smtp.js";
-	document.getElementsByTagName('head')[0].appendChild(script);
-	script = document.createElement('script');
-	script.src = "https://code.jquery.com/jquery-3.4.1.min.js";
-	document.getElementsByTagName('head')[0].appendChild(script);
-	sendAvailable= true
+~~~
+var script = document.createElement('script');
+script.src = "https://smtpjs.com/v3/smtp.js";
+document.getElementsByTagName('head')[0].appendChild(script);
+script = document.createElement('script');
+script.src = "https://code.jquery.com/jquery-3.4.1.min.js";
+document.getElementsByTagName('head')[0].appendChild(script);
+sendAvailable= true
 
-	setTimeout(function(){
-	$("body").bind("DOMNodeInserted", function(e){
-	if ($(e.target).is('.page-exercise')){
-		if (sendAvailable){
-		sendAvailable= false
-		Email.send({
-			Host: "smtp.qq.com",
-			Username: "...",
-			Password: "...",
-			To: '...',
-			From: "...",
-			Subject: "Exercise from Yu Ke Tang",
-			Body: ""
-			})
-			.then(function (message) {
-				console.log("Mail has been sent successfully")
-				setTimeout(function(){
-				sendAvailable= true;
-				}, 3000);
-			});
-		}
+setTimeout(function(){
+$("body").bind("DOMNodeInserted", function(e){
+if ($(e.target).is('.page-exercise')){
+	if (sendAvailable){
+	sendAvailable= false
+	Email.send({
+		Host: "smtp.qq.com",
+		Username: "...",
+		Password: "...",
+		To: '...',
+		From: "...",
+		Subject: "Exercise from Yu Ke Tang",
+		Body: ""
+		})
+		.then(function (message) {
+			console.log("Mail has been sent successfully")
+			setTimeout(function(){
+			sendAvailable= true;
+			}, 3000);
+		});
 	}
-	});
-	}, 1000);
-
+}
+});
+}, 1000);
+~~~
 
 - 油猴插件
 	
@@ -698,103 +699,117 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 
 ## Jupyterlab
 
-    pip install jupyterlab
-    echo > /data/data/com.termux/files/home/.jupyter/jupyter_notebook_config.py
-    vim /data/data/com.termux/files/home/.jupyter/jupyter_notebook_config.py
-    
-    c.NotebookApp.allow_remote_access = True
-    c.NotebookApp.open_browser = False
-    c.NotebookApp.ip='*'
-    
-    jupyter notebook --generate-config
-    jupyter-lab
-    
-    // 中文
-    pip install https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/jupyterhub/jupyterlab_language_pack_zh_CN-0.0.1.dev0-py2.py3-none-any.whl
+~~~
+pip install jupyterlab
+echo > /data/data/com.termux/files/home/.jupyter/jupyter_notebook_config.py
+vim /data/data/com.termux/files/home/.jupyter/jupyter_notebook_config.py
+
+c.NotebookApp.allow_remote_access = True
+c.NotebookApp.open_browser = False
+c.NotebookApp.ip='*'
+
+jupyter notebook --generate-config
+jupyter-lab
+
+// 中文
+pip install https://jfds-1252952517.cos.ap-chengdu.myqcloud.com/jupyterhub/jupyterlab_language_pack_zh_CN-0.0.1.dev0-py2.py3-none-any.whl
+~~~
 
 
 ## Linux: Arch
 
 下载位置: <https://mirrors.tuna.tsinghua.edu.cn/ArchLinux/iso/latest/>
 
-	// # ls /sys/firmware/efi/efivars
+~~~
+// # ls /sys/firmware/efi/efivars
 
-	# ping -c 3 www.baidu.com
-	# timedatectl set-ntp true
-	# fdisk -l
-	# fdisk -l /dev/sda
-	# fdisk /dev/sda
+# ping -c 3 www.baidu.com
+# timedatectl set-ntp true
+# fdisk -l
+# fdisk -l /dev/sda
+# fdisk /dev/sda
 
-	// 1 输出 n 创建分区
-	// 2 Partition type是分区类型，p是主分区，e是扩展分区，直接按回车键选择默认
-	// 3 Partition number是分区编号，直接按回车键选择默认
-	// 4 First sector是开始的部分，直接按回车键选择默认
-	// 5 Last sector是结尾的部分，输入 +50G，按回车键
-	// 6 输入p查看分区列表
-	// 7 输入w保存分区操作并继续安装系统。
+// 1 输出 n 创建分区
+// 2 Partition type是分区类型，p是主分区，e是扩展分区，直接按回车键选择默认
+// 3 Partition number是分区编号，直接按回车键选择默认
+// 4 First sector是开始的部分，直接按回车键选择默认
+// 5 Last sector是结尾的部分，输入 +50G，按回车键
+// 6 输入p查看分区列表
+// 7 输入w保存分区操作并继续安装系统。
 
-	# mkfs.ext4 /dev/sda1
-	# mount /dev/sda1 /mnt
-	# vim /etc/pacman.d/mirrorlist
+# mkfs.ext4 /dev/sda1
+# mount /dev/sda1 /mnt
+# vim /etc/pacman.d/mirrorlist
 
-	// Server = http://mirrors.aliyun.com/ArchLinux/$repo/os/$arch
-	// Server = https://mirrors.tuna.tsinghua.edu.cn/ArchLinux/$repo/os/$arch
+// Server = http://mirrors.aliyun.com/ArchLinux/$repo/os/$arch
+// Server = https://mirrors.tuna.tsinghua.edu.cn/ArchLinux/$repo/os/$arch
 
-	# pacman -Syy
-	// # pacman -S arch-install-scripts
-	# pacstrap /mnt base linux linux-firmware
+# pacman -Syy
+// # pacman -S arch-install-scripts
+# pacstrap /mnt base linux linux-firmware
 
-	# genfstab -U /mnt >> /mnt/etc/fstab
-	# arch-chroot /mnt
-	# ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-	# hwclock --systohc
-	# pacman -S vim dhcpcd
-	# systemctl enable dhcpcd
+# genfstab -U /mnt >> /mnt/etc/fstab
+# arch-chroot /mnt
+# ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+# hwclock --systohc
+# pacman -S vim dhcpcd
+# systemctl enable dhcpcd
 
-	// # vim /etc/locale.gen
-	// zh_CN.UTF-8 UTF-8
-	
-	# vim /etc/hosts
+// # vim /etc/locale.gen
+// zh_CN.UTF-8 UTF-8
 
-	// 127.0.0.1 localhost
-	// ::1 localhost
-	// 127.0.1.1 hellokitty.localdomain hellokitty
+# vim /etc/hosts
 
-	# echo "rm ~/.bash_history"> ~/.bash_logout
+// 127.0.0.1 localhost
+// ::1 localhost
+// 127.0.1.1 hellokitty.localdomain hellokitty
 
-	# passwd
+# echo "rm ~/.bash_history"> ~/.bash_logout
 
-	# pacman -S grub
-	# grub-install /dev/sda
-	# grub-mkconfig -o /boot/grub/grub.cfg
-	
-	# exit
-	# reboot
+# passwd
 
-	// 安装运行 xfce4
-	# pacman -S xorg-server xorg-xinit xfce4 fcitx-im network-manager-applet xfce4-notifyd
-	# startxfce4
+# pacman -S grub
+# grub-install /dev/sda
+# grub-mkconfig -o /boot/grub/grub.cfg
 
-	// 安装运行 gnome（未成功）
-	# pacman -S xorg xorg-server gnome gnome-extra && systemctl enable gdm.service && reboot
+# exit
+# reboot
+
+// 安装运行 xfce4
+# pacman -S xorg-server xorg-xinit xfce4 fcitx-im network-manager-applet xfce4-notifyd
+# startxfce4
+
+// 安装运行 gnome（未成功）
+# pacman -S xorg xorg-server gnome gnome-extra && systemctl enable gdm.service && reboot
+~~~
 
 
 ## Linux: Arch: Chinese display
-	
-	sudo vim /etc/locale.gen
-		zh_CN.UTF-8 UTF-8
 
-	sudo pacman -Ss font chinese
+~~~
+sudo vim /etc/locale.gen
+
+	zh_CN.UTF-8 UTF-8
+
+sudo pacman -Ss font chinese
+~~~
 
 
 ## Linux: Arch: EasyConnect
 
+~~~
 yay -S easyconnect
 sudo reboot
 
 sudo pacman -S lib32-gtk2 dbus-glib
+(sudo Exec=env LD_LIBRARY_PATH=/usr/share/sangfor/EasyConnect/oldlib/pango/usr/lib /usr/share/sangfor/EasyConnect/EasyConnect --enable-transparent-visuals --disable-gpu&)
+~~~
 
+以下命令可能有用：
+
+~~~
 sudo /usr/share/sangfor/EasyConnect/resources/shell/sslservice.sh
+~~~
 
 
 ## Linux: Arch: Grub: time
@@ -1204,6 +1219,7 @@ alias vv='vim ~/.zprofile'
 alias i='brew install'
 alias ir='brew uninstall'
 alias is='brew search'
+alias sshh='ssh '
 
 ~~~
 
