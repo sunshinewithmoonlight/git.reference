@@ -320,6 +320,80 @@ print(json.dumps(result, indent=4, ensure_ascii=False))
 打开扩展程序页面，选中右上方开发人员模式复选框，点击载入正在开发的扩展程序，选中刚刚解压出来的文件夹。
 
 
+## Craw: betterprogramming.pub : Markdown
+
+<https://betterprogramming.pub>
+
+~~~
+script = document.createElement('script');
+script.src = "https://code.jquery.com/jquery-3.4.1.min.js";
+document.getElementsByTagName('head')[0].appendChild(script);
+
+$('pre strong').replaceWith(function(){
+    return $(this).text()
+})
+$('pre br').replaceWith(function(){
+    return "\n"
+})
+$('code').replaceWith(function(){
+    return "`"+ $(this).text() +"`"
+})
+
+var v = ""
+
+$('article div div section').find('*:not(div)').each(function(i, i2){
+
+    if ($(this).attr('id')!==undefined){
+
+        if ( $(this).parent('pre').length==1 ){
+            
+            v += "~~~\n"+ $(this).text() +"\n~~~\n\n"
+        } else if ( $(this).is('h1, h2, h3, h4, h5, h6') ) {
+            
+            var hWrap = new Array(parseInt(  $(this).prop('nodeName').substring(1,2) ) + 1).join('#') +" ";
+
+            v += hWrap+ $(this).text() +"\n\n"
+        } else if ( $(this).parent('blockquote').length==1 ){
+            
+            v += "> "+ $(this).text() +"\n> \n"
+        } else {
+            
+            v += $(this).text() +"\n\n"
+        }
+    }
+})
+
+(function(console){
+
+    console.save = function(data, filename){
+
+        if(!data) {
+            console.error('Console.save: No data')
+            return;
+        }
+
+        if(!filename) filename = 'console.json'
+
+        if(typeof data === "object"){
+            data = JSON.stringify(data, undefined, 4)
+        }
+
+        var blob = new Blob([data], {type: 'text/json'}),
+            e    = document.createEvent('MouseEvents'),
+            a    = document.createElement('a')
+
+        a.download = filename
+        a.href = window.URL.createObjectURL(blob)
+        a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
+        e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+        a.dispatchEvent(e)
+    }
+})(console)
+
+console.save(v, '1.md')
+~~~
+
+
 ## Crawl: NeteaseMusic: title
 
 在控制台中键入
